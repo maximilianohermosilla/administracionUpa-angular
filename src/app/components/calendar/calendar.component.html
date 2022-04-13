@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="row">
+        <div class="col-10">
+            <p-fullCalendar #calendar [options]="options" [events]="events"
+            [events]="events"
+            (dateClick)="dateClick($event)"
+            (eventClick)="eventClick($event)"
+            (eventDragStop)="eventDragStop($event)"
+            ></p-fullCalendar>
+        </div>
+        
+        <div id='external' data-event='{ "title": "my event", "duration": "02:00" }' class="col-2">
+            <p>
+            <strong>Guardias</strong>
+            </p>
+            <div class='fc-event' data-event='{ "title": "my event", "duration": "02:00" }'>08:00 Paula</div>
+            <div class='fc-event'>08:00 Cecilia</div>
+            <div class='fc-event'>08:00 Maxi</div>
+            <div class='fc-event'>08:00 Sandra</div>
+            <div class='fc-event'>08:00 Yanina</div>
+            <div class='fc-event'>08:00 Debora</div>
+            <div class='fc-event'>08:00 Florencia</div>
+            <br>
+            <div class='fc-event'>20:00 Paula</div>
+            <div class='fc-event'>20:00 Cecilia</div>
+            <div class='fc-event'>20:00 Maxi</div>
+            <div class='fc-event'>20:00 Sandra</div>
+            <div class='fc-event'>20:00 Yanina</div>
+            <div class='fc-event'>20:00 Debora</div>
+            <div class='fc-event'>20:00 Florencia</div>
+        </div>
+
+
+    </div>
+</div>
+
