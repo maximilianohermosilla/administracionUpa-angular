@@ -1,19 +1,33 @@
 <div class="container">
     <div class="row">
-        <div class="col-10">
+        <div id='external1' data-event='{ "title": "my event", "duration": "02:00" }' class="col-md-2 col-sm-12" style="margin-top: 10px">
+            <p>
+            <strong>Solicitudes</strong>
+            </p>
+            <div class='fc-event'>Cambio de guardia</div>
+            <div class='fc-event'>Compensatorio</div>
+            <div class='fc-event'>Licencia examen</div>
+            <div class='fc-event'>Licencia Enfermedad</div>
+            <div class='fc-event'>Licencia Matrimonio</div>
+            <div class='fc-event'>Licencia Nacimiento</div>
+            <div class='fc-event'>Vacaciones</div>
+        </div>
+
+        <div class="col-md-8 col-sm-12" style="margin-top: 10px">
             <p-fullCalendar #calendar [options]="options" [events]="events"
             [events]="events"
             (dateClick)="dateClick($event)"
             (eventClick)="eventClick($event)"
             (eventDragStop)="eventDragStop($event)"
+            (eventDrop)="eventDrop($event)"
             ></p-fullCalendar>
         </div>
         
-        <div id='external' data-event='{ "title": "my event", "duration": "02:00" }' class="col-2">
+        <div id='external2' data-event='{ "title": "my event", "duration": "02:00" }' class="col-md-2 col-sm-12" style="margin-top: 10px">
             <p>
             <strong>Guardias</strong>
             </p>
-            <div class='fc-event' data-event='{ "title": "my event", "duration": "02:00" }'>08:00 Paula</div>
+            <div class='fc-event' data-event='{ "title": "my event", "duration": "02:00",  backgroundColor: "pink", textColor: "black"}'>08:00 Paula</div>
             <div class='fc-event'>08:00 Cecilia</div>
             <div class='fc-event'>08:00 Maxi</div>
             <div class='fc-event'>08:00 Sandra</div>
