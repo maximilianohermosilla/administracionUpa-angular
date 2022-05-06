@@ -4,3 +4,46 @@
     padding-left: 5px;
     height: 20px;
 }
+
+.fc-toolbar h2 {
+    font-size: 1em;
+}
+
+colores{
+    --blue: #2255a4;
+    --indigo: #6610f2;
+    --purple: #7460ee;
+    --pink: #f74d4d;
+    --red: #da542e;
+    --orange: #fb8c00;
+    --yellow: #ffb848;
+    --green: #28b779;
+    --teal: #20c997;
+    --cyan: #27a9e3;
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --blue: #2255a4;
+    --indigo: #6610f2;
+    --purple: #7460ee;
+    --pink: #f74d4d;
+    --red: #da542e;
+    --orange: #fb8c00;
+    --yellow: #ffb848;
+    --green: #28b779;
+    --teal: #20c997;
+    --cyan: #27a9e3;
+    --white: #fff;
+    --gray: #6c757d;
+    --primary: #7460ee;
+    --secondary: #6c757d;
+    --success: #28b779;
+    --info: #2255a4;
+    --warning: #ffb848;
+    --danger: #da542e;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --cyan: #27a9e3;
+    --orange: #fb8c00;
+    --purple: #7460ee;
+}
