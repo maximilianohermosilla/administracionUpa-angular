@@ -1,17 +1,33 @@
-<div class="">
-    <div class="row">
-        <div id='external1' data-event='{ "title": "my event", "duration": "02:00" }' class="col-md-2 col-sm-6 offset-sm-3 col-xs-6 offset-xs-3 offset-md-0" style="margin-top: 10px">
-            <p>
-            <strong>Solicitudes</strong>
-            </p>
-            <div class='fc-event'>Cambio de guardia</div>
-            <div class='fc-event'>Compensatorio</div>
-            <div class='fc-event'>Licencia examen</div>
-            <div class='fc-event'>Licencia Enfermedad</div>
-            <div class='fc-event'>Licencia Matrimonio</div>
-            <div class='fc-event'>Licencia Nacimiento</div>
-            <div class='fc-event'>Vacaciones</div>
+<div class="calendar">
+    <div class="row">       
+
+        <div id='external2' class="col-md-2 col-sm-6 offset-sm-3 offset-md-0" style="margin-top: 10px">
+            <div class="contenedor">
+                <p>                    <strong>GUARDIAS</strong>                    </p>
+            </div>
+            
+            <br>
+            <strong>Turno Mañana</strong>
+            <div class='fc-event' style="background-color: hotpink; border-color: hotpink">08:00 Paula</div>
+            <div class='fc-event' style="background-color: #27a9e3; border-color: #27a9e3">08:00 Cecilia</div>
+            <div class='fc-event' style="background-color: #2255a4; border-color: #2255a4">08:00 Maxi</div>
+            <div class='fc-event' style="background-color: red; border-color: red">08:00 Sandra</div>
+            <div class='fc-event' style="background-color: orange; border-color: orange">08:00 Yanina</div>
+            <div class='fc-event' style="background-color: green; border-color: green">08:00 Debora</div>
+            <div class='fc-event' style="background-color: purple; border-color: purple">08:00 Florencia</div>
+            <br>
+            <strong>Turno Noche</strong>
+            <div class='fc-event' style="background-color: hotpink; border-color: hotpink">20:00 Paula</div>
+            <div class='fc-event' style="background-color: #27a9e3; border-color: #27a9e3">20:00 Cecilia</div>
+            <div class='fc-event' style="background-color: #2255a4; border-color: #2255a4">20:00 Maxi</div>
+            <div class='fc-event' style="background-color: red; border-color: red">20:00 Sandra</div>
+            <div class='fc-event' style="background-color: orange; border-color: orange">20:00 Yanina</div>
+            <div class='fc-event' style="background-color: green; border-color: green">20:00 Debora</div>
+            <div class='fc-event' style="background-color: purple; border-color: purple">20:00 Florencia</div>
         </div>
+
+        <!-- COMPONENTE CALENDAR -->
+        <!-- ------------------- -->
 
         <div class="col-md-8 col-sm-12" style="margin-top: 10px">
             <p-fullCalendar #calendar [options]="options" [events]="events"
@@ -23,34 +39,46 @@
             ></p-fullCalendar>
         </div>
         
-        <div id='external2' data-event='{ "title": "my event", "duration": "02:00" }' class="col-md-2 col-sm-6 offset-sm-3 offset-md-0" style="margin-top: 10px">
-            <p>
-            <strong>Guardias</strong>
-            </p>
-            <div class='fc-event' style="background-color: hotpink; border-color: hotpink">08:00 Paula</div>
-            <div class='fc-event' style="background-color: #27a9e3; border-color: #27a9e3">08:00 Cecilia</div>
-            <div class='fc-event' style="background-color: #2255a4; border-color: #2255a4">08:00 Maxi</div>
-            <div class='fc-event' style="background-color: red; border-color: red">08:00 Sandra</div>
-            <div class='fc-event' style="background-color: orange; border-color: orange">08:00 Yanina</div>
-            <div class='fc-event' style="background-color: green; border-color: green">08:00 Debora</div>
-            <div class='fc-event' style="background-color: purple; border-color: purple">08:00 Florencia</div>
+        <!-- ------------------- -->
+
+        <div id='external1' class="col-md-2 col-sm-6 offset-sm-3 col-xs-6 offset-xs-3 offset-md-0">
+            <div class="">
+                <p>
+                    <strong>SOLICITUDES</strong>
+                    <br>         
+                    </p>
+            </div>
+            
             <br>
-            <div class='fc-event' style="background-color: hotpink; border-color: hotpink">20:00 Paula</div>
-            <div class='fc-event' style="background-color: #27a9e3; border-color: #27a9e3">20:00 Cecilia</div>
-            <div class='fc-event' style="background-color: #2255a4; border-color: #2255a4">20:00 Maxi</div>
-            <div class='fc-event' style="background-color: red; border-color: red">20:00 Sandra</div>
-            <div class='fc-event' style="background-color: orange; border-color: orange">20:00 Yanina</div>
-            <div class='fc-event' style="background-color: green; border-color: green">20:00 Debora</div>
-            <div class='fc-event' style="background-color: purple; border-color: purple">20:00 Florencia</div>
+            <strong> Arrastre las solicitudes</strong>
+            <div class='fc-event specialEvent'>Cambio de guardia</div>
+            <div class='fc-event specialEvent'>Compensatorio</div>
+            <div class='fc-event specialEvent'>Licencia examen</div>
+            <div class='fc-event specialEvent'>Licencia Enfermedad</div>
+            <div class='fc-event specialEvent'>Licencia Matrimonio</div>
+            <div class='fc-event specialEvent'>Licencia Nacimiento</div>
+            <div class='fc-event specialEvent'>Vacaciones</div>
+            
+            <br>
+            <p>
+                <strong>Eventos</strong>
+                <br>
+                Administración
+                </p>
+            <div class="trash">    
+                <i class="bi bi-trash3-fill trasher"></i>  
+            </div>
+            <div class="title-center">
+                <p style="font-size: 0.6rem; margin:auto">Arrastre aquí para eliminar</p>
+            </div>
+            <div class="" style="margin-top: 50px">
+                
+                <button class="btn btn-lg btn-success float-start" style="width: 100%" >Guardar</button>
+                <button class="btn btn-lg btn-danger float-end" style="width: 100%; margin-top: 10px" (click)="saveEvents()">Descartar</button>
+            </div>
         </div>
 
 
     </div>
-</div>
-
-<div class="" style="margin-top: 10px">
-    <button class="btn btn-lg btn-danger float-start" (click)="saveEvents()">Descartar</button>
-    <button class="btn btn-lg btn-success float-end">Guardar</button>
-
 </div>
 

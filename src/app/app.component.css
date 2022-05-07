@@ -4,11 +4,13 @@
     color: #333;
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-   
-  }
-
+    -moz-osx-font-smoothing: grayscale;   
+  }  
   
+  .logo{
+    width: 15vw;
+    min-width: 80px;
+  }
 
   h1,
   h2,
@@ -28,20 +30,24 @@
   }
 
   .toolbar {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
     height: 60px;
+    min-height: 60px;
     display: flex;
     align-items: center;
-    background-color: #1976d2;
-    color: white;
-    font-weight: 600;
+    background-color: #232a30;
+    background-size:100%;
+    color: white;    
+    outline: 1px solid #111;
+    font-weight: 600;    
+    z-index: 100;
   }
 
   .toolbar img {
-    margin: 0 16px;
+    margin: 0 1vw;
   }
 
   .toolbar #twitter-logo {
@@ -67,13 +73,19 @@
     align-items: center;
   }
 
-  svg.material-icons {
+  .material-icons {
     height: 24px;
     width: auto;
   }
 
+  .icon-login{
+    width: 40px;
+    height: 40px;
+    font-size: 36px
+  }
+
   svg.material-icons:not(:last-child) {
-    margin-right: 8px;
+    margin-right: 0.5em;
   }
 
   .card svg.material-icons path {
@@ -91,10 +103,8 @@
     all: unset;
     border-radius: 4px;
     border: 1px solid #eee;
-    background-color: #fafafa;
     height: 40px;
-    margin: 0 8px 16px;
-    padding: 16px;
+    padding: 6px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -108,16 +118,17 @@
   }
 
   .card.card-small {
-    height: 16px;
-    width: 10vw;
-    background-color: #2776c2;
+    height: 36px;
+    margin:1px;
+    font-size: 1vw;
     color: #ffffff;
-    border-color: #1776a1;
+    border-color: #232a30;
 
   }
 
-  .card.card-small:hover{
-      opacity: 0.8;
+  .toolbar > .card.card-small:hover{
+      opacity: 0.7;
+      background-color: rgba(0, 0, 0, 0.1);
   }
 
   .card-container .card:not(.highlight-card) {
@@ -134,17 +145,26 @@
   }
 
   .card.highlight-card {
-    background-color: #1976d2;
+    background: linear-gradient(#004993,#008bf6);;
     color: white;
     font-weight: 600;
     border: none;
     width: auto;
     min-width: 30%;
+    min-height: 35px;
     position: relative;
+    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
   }
 
   .card.card.highlight-card span {
     margin-left: 60px;
+    margin-right: 60px;
+    margin-top: 1em;
+    margin-bottom: 1.5em;
+  }
+
+  .card.card.highlight-card span h3 {    
+    font-size: 1rem;
   }
 
   svg#rocket {
@@ -171,39 +191,6 @@
 
   a:hover {
     color: #125699;
-  }
-
-  .terminal {
-    position: relative;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 6px;
-    padding-top: 45px;
-    margin-top: 8px;
-    overflow: hidden;
-    background-color: rgb(15, 15, 16);
-  }
-
-  .terminal::before {
-    content: "\2022 \2022 \2022";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 4px;
-    background: rgb(58, 58, 58);
-    color: #c2c3c4;
-    width: 100%;
-    font-size: 2rem;
-    line-height: 0;
-    padding: 14px 0;
-    text-indent: 4px;
-  }
-
-  .terminal pre {
-    font-family: SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
-    color: white;
-    padding: 0 1rem 1rem;
-    margin: 0;
   }
 
   .circle-link {

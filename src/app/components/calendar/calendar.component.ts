@@ -15,7 +15,6 @@ import { Evento } from 'src/app/models/evento';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
-  
   @ViewChild('external') external: ElementRef;
   draggableEl1;
   draggableEl2;
