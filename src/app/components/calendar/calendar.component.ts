@@ -7,7 +7,6 @@ import ExternalDraggable from '@fullcalendar/interaction/interactions-external/E
 import esLocale from '@fullcalendar/core/locales/es';
 import { EventoService } from 'src/app/services/evento.service';
 import { Evento } from 'src/app/models/evento';
-//import esLocale from '@fullcalendar/core/locales/es';
 
 @Component({
   selector: 'app-calendar',
@@ -29,10 +28,7 @@ export class CalendarComponent implements OnInit {
     this.draggableEl1 = document.getElementById('external1');
     this.draggableEl2 = document.getElementById('external2');
     this.getEventos();
-    this.setOptions();   
-     
-    //console.log(this.external);
-    //console.log(this.draggableEl1);
+    this.setOptions();  
 
     new Draggable(this.draggableEl1, {
       itemSelector: '.fc-event',
@@ -58,11 +54,11 @@ export class CalendarComponent implements OnInit {
           borderColor: eventEl.style.borderColor,
           create: true,
           editable: true,
-          timeZone: "UTC"
+          timeZone: "UTC",
+          revert: true
         };
       }
     });
-
   }
 
 
@@ -89,6 +85,9 @@ export class CalendarComponent implements OnInit {
   eventDrop(model) {
     console.log(model);
   }
+  eventResize(model) {
+    console.log(model);
+  }
 
   setOptions(){
     this.options = {
@@ -109,22 +108,28 @@ export class CalendarComponent implements OnInit {
         minute: '2-digit',
         hour12: false
       },
-      dateClick: (dateClickEvent) =>  {         // <-- add the callback here as one of the properties of `options`
+      dateClick: (dateClickEvent) =>  {
         console.log("DATE CLICKED !!!", dateClickEvent.dateStr);
         this.dateClick(dateClickEvent);
       },
-      eventClick: (eventClickEvent) =>  {         // <-- add the callback here as one of the properties of `options`
+      eventClick: (eventClickEvent) =>  {
         console.log("Event CLICKED !!!", eventClickEvent);
       },
-      /*eventDragStop: (eventClickEvent) =>  {         // <-- add the callback here as one of the properties of `options`
-        console.log("Event drag stop !!!", eventClickEvent.event.title, eventClickEvent.event.start, eventClickEvent.event.backgroundColor, eventClickEvent.event.borderColor, eventClickEvent.event.textColor);
-        console.log("Event drag stop !!!", eventClickEvent.event);
-      },   */   
+      eventDragStop: (eventDragStop) =>  {
+        console.log(eventDragStop.event);
+        const result = this.eventsTemp.find(event => event.id == eventDragStop.event._instance.instanceId);
+        const index = this.eventsTemp.indexOf(result);
+        this.eventsTemp.splice(index,1);
+        eventDragStop.event.remove();
+
+      },  
       eventReceive: (eventReceiveEvent) => {
+        const time = (eventReceiveEvent.event.backgroundColor == 'crimson') ? '': (" "+(eventReceiveEvent.event.title).substring(0,5));
         this.evento = {
+            id: eventReceiveEvent.event._instance.instanceId,
             title: eventReceiveEvent.event.title,
             description: eventReceiveEvent.event.title,
-            start: (eventReceiveEvent.event.start.getFullYear()+ "-"+ eventReceiveEvent.event.start.getMonth()+ "-"+ eventReceiveEvent.event.start.getDate()+ " " + (eventReceiveEvent.event.title).substring(0,5)),
+            start: (eventReceiveEvent.event.start.getFullYear()+ "-"+ (Number(eventReceiveEvent.event.start.getMonth())+1)+ "-"+ eventReceiveEvent.event.start.getDate()+ time),
             end: "",
             background_color: eventReceiveEvent.event.backgroundColor,
             border_color: eventReceiveEvent.event.borderColor,
@@ -135,50 +140,35 @@ export class CalendarComponent implements OnInit {
         console.log(eventReceiveEvent.event);
         this.eventsTemp.push(this.evento);
       },
-      eventDrop: (eventClickEvent) =>  {         // <-- add the callback here as one of the properties of `options`
-        console.log("Event drop !!!", eventClickEvent.event.title, eventClickEvent.event.start, eventClickEvent.event.backgroundColor, eventClickEvent.event.borderColor, eventClickEvent.event.textColor);
-        console.log("Event drop !!!", eventClickEvent.event);
+      eventResize: (eventResizeEvent) => {
+        console.log(eventResizeEvent);  
+        const time = (eventResizeEvent.event.backgroundColor == 'crimson') ? '': (" "+(eventResizeEvent.event.title).substring(0,5));
+        const result = this.eventsTemp.find(event => event.id == eventResizeEvent.event._instance.instanceId);
+        const index = this.eventsTemp.indexOf(result);
+        this.eventsTemp[index].start = (eventResizeEvent.event.start.getFullYear()+ "-"+ (Number(eventResizeEvent.event.start.getMonth())+1)+ "-"+ eventResizeEvent.event.start.getDate()+ time);
+        this.eventsTemp[index].end = (eventResizeEvent.event.end.getFullYear()+ "-"+ (Number(eventResizeEvent.event.end.getMonth())+1)+ "-"+ eventResizeEvent.event.end.getDate()+ time);
+        
+      },
+      eventDrop: (eventClickEvent) =>  {  
+        console.log("Event drop !!!", eventClickEvent.event);  
+        const time = (eventClickEvent.event.backgroundColor == 'crimson') ? '': (" "+(eventClickEvent.event.title).substring(0,5));      
+        const _end = (eventClickEvent.event.end === null) ? '': (eventClickEvent.event.end.getFullYear()+ "-"+ (Number(eventClickEvent.event.end.getMonth())+1)+ "-"+ eventClickEvent.event.end.getDate());        
+        //console.log(_end);
+        this.evento = {
+          id: eventClickEvent.event._instance.instanceId,
+          title: eventClickEvent.event.title,
+          description: eventClickEvent.event.title,
+          start: (eventClickEvent.event.start.getFullYear()+ "-"+ (Number(eventClickEvent.event.start.getMonth())+1)+ "-"+ eventClickEvent.event.start.getDate()+ time),
+          end: _end,
+          background_color: eventClickEvent.event.backgroundColor,
+          border_color: eventClickEvent.event.borderColor,
+          color: "#FFFFFF",
+          editable: "1"
+      }
+      console.log("evento ", this.evento);
+      this.eventsTemp.push(this.evento);
       },  
           
     };
   }
 }
-
-/*this.events = [
-      {
-        title: "Evento 1",
-        start:'2022-04-16',        
-        description: "Guardia",
-        allDay: true
-      },
-      {
-        id: 14,
-        title: "Paula",
-        start: '2022-04-13 08:00',
-        end: '2022-04-13 20:00',
-        description: "Guardia 2",
-        backgroundColor: 'pink',
-        borderColor: 'pink',
-        textColor: 'black'
-      },
-      {
-        title: "Yanina",
-        start: '2022-04-13 20:00',
-        description: "Guardia 2"
-      },
-      {
-        title: "Cambio de guardia",
-        start: '2022-04-13',
-        editable: false,
-        description: "Guardia 2"
-      },
-      {
-        title: "Vacaciones chechu",
-        allDay: true,
-        start: '2022-04-07',
-        end: '2022-04-21',
-        color: 'red',
-        description: "Guardia 2",
-        display: 'background'
-      },
-    ]*/

@@ -16,12 +16,12 @@
 
 .trash{
     display: flex;
-    color:#FFFFFF;
+    color:#fffcfc;
     width: 100%;
     margin: auto;
     height: 3em;
     font-size: 30px;
-    background: linear-gradient(red, rgb(255, 89, 0));
+    background: linear-gradient(rgb(255, 216, 216), rgb(255, 65, 65));
     border-radius: 10px;
     opacity: 0.8;
     margin-bottom:0px;
@@ -38,9 +38,16 @@
 }
 
 .specialEvent{
-    background: linear-gradient(rgb(234, 255, 0), rgb(255, 145, 0));
-    color: #000000; 
-    border-color: #ffb848
+    background: crimson;
+    color: #FFFFFF; 
+    border-color: crimson;
+    height: 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin:5px;
+    font-size: 0.8em;
 }
 
 #external1{
@@ -58,3 +65,19 @@
     padding: 10px;
     color: #ffffff
 }
+
+.card {
+    all: unset;
+    height: 2em;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    line-height: 24px;
+    margin:1px;
+    background: linear-gradient(#004993,#008bf6);;
+    border-color: #232a30;
+  }
