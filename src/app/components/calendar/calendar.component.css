@@ -1,9 +1,18 @@
+i{
+    margin-right: 10px
+}
+
 .fc-event{
     margin-bottom: 5px;
     padding: 1px;
     padding-left: 5px;
     height: 20px;
 }
+
+.fc-event:hover {
+    transform: translateY(-0.06rem);
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  }
 
 .fc-toolbar h2 {
     font-size: 1em;
@@ -49,6 +58,7 @@
     margin:5px;
     font-size: 0.8em;
     cursor: grab;
+    
 }
 
 .turno{
@@ -104,6 +114,16 @@
     margin:1px;
     background: linear-gradient(#004993,#008bf6);;
     border-color: #232a30;
+  }
+
+  .card:hover {
+    transform: translateY(-0.10rem);
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .btn:hover {
+    transform: translateY(-0.20rem);
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
   }
 
   .col-md-8{
