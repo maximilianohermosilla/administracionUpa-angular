@@ -48,6 +48,7 @@
     align-items: center;
     margin:5px;
     font-size: 0.8em;
+    cursor: grab;
 }
 
 .turno{
@@ -59,6 +60,16 @@
     align-items: center;
     margin:5px;
     font-size: 0.8em;
+    cursor: move; /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+.turno:active {
+    cursor: grabbing, auto;
+    cursor: -moz-grabbing;
+    cursor: -webkit-grabbing;
 }
 
 #external1{
