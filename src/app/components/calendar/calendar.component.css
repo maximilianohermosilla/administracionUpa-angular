@@ -50,12 +50,24 @@
     font-size: 0.8em;
 }
 
+.turno{
+    color: #FFFFFF; 
+    height: 16px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin:5px;
+    font-size: 0.8em;
+}
+
 #external1{
     margin-top: 10px;
     background: linear-gradient(90deg, #3a3a43,#404456);
     border-radius: 3px;
     padding: 10px;
-    color: #ffffff
+    color: #ffffff;
+    box-shadow: 0 4px 17px rgba(255, 255, 255, 0.55);
 }
 
 #external2{
@@ -63,7 +75,8 @@
     background: linear-gradient(90deg, #3a3a43,#404456);
     border-radius: 3px;
     padding: 10px;
-    color: #ffffff
+    color: #ffffff;
+    box-shadow: 0 4px 17px rgba(255, 255, 255, 0.55);
 }
 
 .card {
