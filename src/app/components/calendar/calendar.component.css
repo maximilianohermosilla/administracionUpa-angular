@@ -94,3 +94,9 @@
     background: linear-gradient(#004993,#008bf6);;
     border-color: #232a30;
   }
+
+  .col-md-8{
+    margin-top: 8px;
+    padding-right: 3px;
+    padding-left:3px;
+  }
