@@ -1,32 +1,32 @@
+<div class="card title">
+    <span><h3>Guardias</h3></span>
+</div>
+
 <div class="calendar">
     <div class="row">       
 
+
+        <!-- MENU LEFT -->
         <div id='external2' class="col-md-2 col-sm-6 offset-sm-3 offset-md-0" style="margin-top: 10px">
             <div class="card">
                 <i class="bi bi-calendar-plus"></i> <strong>TURNOS</strong>
             </div>
-            
+
             <br>
             <strong>Turno Mañana</strong>
-            <div class='fc-event turno' style="background-color: hotpink; border-color: hotpink">08:00 Paula</div>
-            <div class='fc-event turno' style="background-color: #27a9e3; border-color: #27a9e3">08:00 Cecilia</div>
-            <div class='fc-event turno' style="background-color: #2255a4; border-color: #2255a4">08:00 Maxi</div>
-            <div class='fc-event turno' style="background-color: orange; border-color: orange">08:00 Sandra</div>
-            <div class='fc-event turno' style="background-color: purple; border-color: purple">08:00 Yanina</div>
-            <div class='fc-event turno' style="background-color: green; border-color: green">08:00 Debora</div>
-            <div class='fc-event turno' style="background-color: rgb(200, 0, 255); border-color: rgb(200, 0, 255)">08:00 Florencia</div>
+            <li *ngFor="let usuario of usuarios" style="list-style-type: none;">
+                <div *ngIf="usuario.id>1" class='fc-event turno' [ngStyle]="{'background-color': usuario.color, 'border-color': usuario.color}" id="{{usuario.id}}">08:00 {{usuario.name}}</div>
+            </li>
+
             <br>
             <strong>Turno Noche</strong>
-            <div class='fc-event turno' style="background-color: hotpink; border-color: hotpink">20:00 Paula</div>
-            <div class='fc-event turno' style="background-color: #27a9e3; border-color: #27a9e3">20:00 Cecilia</div>
-            <div class='fc-event turno' style="background-color: #2255a4; border-color: #2255a4">20:00 Maxi</div>
-            <div class='fc-event turno' style="background-color: orange; border-color: orange">20:00 Sandra</div>
-            <div class='fc-event turno' style="background-color: purple; border-color: purple">20:00 Yanina</div>
-            <div class='fc-event turno' style="background-color: green; border-color: green">20:00 Debora</div>
-            <div class='fc-event turno' style="background-color: rgb(200, 0, 255); border-color: rgb(200, 0, 255)">20:00 Florencia</div>
+            <li *ngFor="let usuario of usuarios" style="list-style-type: none;">
+                <div *ngIf="usuario.id>1" class='fc-event turno' [ngStyle]="{'background-color': usuario.color, 'border-color': usuario.color}" id="{{usuario.id}}">20:00 {{usuario.name}}</div>
+            </li>
+           
         </div>
 
-        <!-- COMPONENTE CALENDAR -->
+        <!-- COMPONENTE FULL-CALENDAR -->
         <!-- ------------------- -->
 
         <div class="col-md-8 col-sm-12" style="">
@@ -40,7 +40,8 @@
         </div>
         
         <!-- ------------------- -->
-
+     
+        <!-- MENU RIGHT -->
         <div id='external1' class="col-md-2 col-sm-6 offset-sm-3 col-xs-6 offset-xs-3 offset-md-0">
             <div class="card">
                 <i class="bi bi-clipboard2-check"></i><strong>SOLICITUDES</strong>
@@ -48,34 +49,40 @@
             
             <br>
             <strong> Arrastre las solicitudes</strong>
-            <div class='fc-event specialEvent' style="background-color: crimson; border-color: crimson">Cambio de guardia</div>
-            <div class='fc-event specialEvent' style="background-color: crimson; border-color: crimson">Compensatorio</div>
-            <div class='fc-event specialEvent' style="background-color: crimson; border-color: crimson">Licencia examen</div>
-            <div class='fc-event specialEvent' style="background-color: crimson; border-color: crimson">Licencia Enfermedad</div>
-            <div class='fc-event specialEvent' style="background-color: crimson; border-color: crimson">Licencia Matrimonio</div>
-            <div class='fc-event specialEvent' style="background-color: crimson; border-color: crimson">Licencia Nacimiento</div>
-            <div class='fc-event specialEvent' style="background-color: crimson; border-color: crimson">Vacaciones</div>
-            
-            <!-- <br>
-            <p>
-                <strong>Eventos</strong>
-                <br>
-                Administración
-                </p>
-            <div class="trash">    
-                <i class="bi bi-trash3-fill trasher"></i>  
+            <li *ngFor="let tipo of tipoEventos" style="list-style-type: none;">
+                <div *ngIf="tipo.id>2" class='fc-event specialEvent' style="background-color: crimson; border-color: #000000" id="{{tipo.id}}">{{tipo.descripcion}}</div>
+            </li>
+            <br>
+
+            <!-- FILTRO TIPO EVENTO -->
+            <div class="">
+                <p>Filtro:</p>
+                <select name="cbTipo" id="cbTipo">
+                    <option *ngFor="let tipo of tipoEventos"                  
+                    >
+                        {{tipo.descripcion}}
+                    </option>
+                </select>
             </div>
-            <div class="title-center">
-                <p style="font-size: 0.6rem; margin:auto">Arrastre aquí para eliminar</p>
-            </div> -->
-            <div class="" style="margin-top: 50px">
-                <div class="card">
-                    <i class="bi bi-cloud-arrow-down"></i><strong>EVENTOS</strong>
-                </div>
-                <br>
-                <button class="btn btn-lg btn-success float-start" style="width: 100%" ><i class="bi bi-calendar-check"></i>Guardar</button>
-                <button class="btn btn-lg btn-outline-danger float-end" style="width: 100%; margin-top: 20px" (click)="saveEvents()"><i class="bi bi-trash3"></i>Limpiar</button>
+            <br>
+
+            <!-- FILTRO EMPLEADOS -->
+            <div class="">
+                <p>Empleados:</p>
+                <select name="cbUsuarios" id="cbUsuarios">
+                    <option *ngFor="let usuario of usuarios"                  
+                    >
+                        {{usuario.id == 1 ? ' Todos ': usuario.name + ' ' +usuario.lastName}}
+                    </option>
+                </select>
             </div>
+        </div>
+
+        <!-- BUTTONS -->
+        <div class="">
+            <br>
+            <button class="btn btn-lg btn-success float-start" style="width: 33%" (click)="saveEvents()"><i class="bi bi-calendar-check d-none"></i>Guardar</button>
+            <button class="btn btn-lg btn-danger float-end" style="width: 33%" (click)="cleanEvents()"><i class="bi bi-trash3 d-none"></i>Limpiar</button>
         </div>
 
 

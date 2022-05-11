@@ -33,6 +33,39 @@ export class EventoService {
     )
   }
 
+  getEventosAll(): Observable<any>{
+    return this.http.get<Evento[]>(this.api+'DTO').pipe(
+      tap(() => {
+         this._refresh$.next();       
+      })
+    )
+  }
+
+  // insertEvento(evento: Evento): Observable<Evento>{   
+  //   const data = {'evento': evento, 'idTipoEvento': Number(evento.tipoEvento.id), 'idUsuario': evento.usuario.id};
+  //   console.log(data);
+  //   return this.http.post<Evento>(this.api+"/save", data);
+  // }
+
+  insertEvento(evento: Evento): Observable<Evento>{   
+    const data = {'evento': evento, 'idTipoEvento': Number(evento.tipoEvento.id), 'idUsuario': evento.usuario.id};
+    return this.http.post<Evento>(this.api+"/saveEvento/"+evento.usuario.id+"/"+evento.tipoEvento.id, evento);
+  }
+
+
+  updateEvento(evento: Evento): Observable<Evento>{
+    const updateUrl = `${this.api}/${evento.id}`
+    return this.http.put<Evento>(updateUrl, evento, {responseType: "text" as "json"}).pipe(
+      tap(() => {
+         this.refresh$.next();       
+      })
+    );
+  }  
+
+  deleteEvento(evento: Evento): Observable<any>{
+    const deleteUrl = `${this.api}/${evento.id}`
+    return this.http.delete<Evento>(deleteUrl, {responseType: "text" as "json"});
+  }
 
 
 }

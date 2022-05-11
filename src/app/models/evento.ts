@@ -1,11 +1,18 @@
+import { TipoEvento } from "./tipoEvento";
+import { Usuario } from "./usuario";
+
 export interface Evento{
     id?: number,
     title: string,
     description: string,
     start: string,
     end: string,
-    background_color: string,
-    border_color: string,
+    backgroundColor: string,
+    borderColor: string,
     color: string,
-    editable: string
+    editable: boolean,
+    enabled: boolean,
+    newEvent: boolean,
+    tipoEvento: TipoEvento,
+    usuario: Usuario
 }

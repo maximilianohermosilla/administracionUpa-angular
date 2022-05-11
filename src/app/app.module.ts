@@ -7,17 +7,29 @@ import { AppComponent } from './app.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { EventoService } from './services/evento.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { RoutingModule } from './app-routing.module';
+import { SolicitudesComponent } from './components/solicitudes/solicitudes.component';
+import { ConsultasComponent } from './components/consultas/consultas.component';
+import { InicioComponent } from './components/inicio/inicio.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CalendarComponent
+    CalendarComponent,
+    HeaderComponent,
+    FooterComponent,
+    SolicitudesComponent,
+    ConsultasComponent,
+    InicioComponent
   ],
   imports: [
     BrowserModule,
     FullCalendarModule,
     HttpClientModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    RoutingModule
   ],
   providers: [EventoService],
   bootstrap: [AppComponent]
