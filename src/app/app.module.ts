@@ -13,6 +13,7 @@ import { RoutingModule } from './app-routing.module';
 import { SolicitudesComponent } from './components/solicitudes/solicitudes.component';
 import { ConsultasComponent } from './components/consultas/consultas.component';
 import { InicioComponent } from './components/inicio/inicio.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,9 @@ import { InicioComponent } from './components/inicio/inicio.component';
     FullCalendarModule,
     HttpClientModule,
     FontAwesomeModule,
-    RoutingModule
+    RoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [EventoService],
   bootstrap: [AppComponent]

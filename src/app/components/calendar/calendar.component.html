@@ -50,14 +50,23 @@
             <br>
             <strong> Arrastre las solicitudes</strong>
             <li *ngFor="let tipo of tipoEventos" style="list-style-type: none;">
-                <div *ngIf="tipo.id>2" class='fc-event specialEvent' style="background-color: crimson; border-color: #000000" id="{{tipo.id}}">{{tipo.descripcion}}</div>
+                <div *ngIf="tipo.id>2" class='fc-event specialEvent' style="background-color: crimson; border-color: #000000" id="{{tipo.id}}"
+                    data-bs-toggle="modal" data-bs-target="#solicitudModal"
+                    >{{tipo.descripcion}}</div>
             </li>
             <br>
+
+            
+            
+
+
+
 
             <!-- FILTRO TIPO EVENTO -->
             <div class="">
                 <p>Filtro:</p>
                 <select name="cbTipo" id="cbTipo">
+                    <option value="">Todos</option>
                     <option *ngFor="let tipo of tipoEventos"                  
                     >
                         {{tipo.descripcion}}
@@ -78,14 +87,50 @@
             </div>
         </div>
 
+        
+
         <!-- BUTTONS -->
         <div class="">
             <br>
             <button class="btn btn-lg btn-success float-start" style="width: 33%" (click)="saveEvents()"><i class="bi bi-calendar-check d-none"></i>Guardar</button>
-            <button class="btn btn-lg btn-danger float-end" style="width: 33%" (click)="cleanEvents()"><i class="bi bi-trash3 d-none"></i>Limpiar</button>
+            <button class="btn btn-lg btn-danger float-end" style="width: 33%" (click)="cleanEvents()" data-bs-toggle="modal" data-bs-target="#solicitudModal"><i class="bi bi-trash3 d-none"></i>Limpiar</button>
+        </div>
+
+        <div class="modal" id="solicitudModal" [ngStyle]="{'display': viewModal ? 'block' : 'none', 'opacity': 1}">      
+    
+                <div class="modal-dialog" >
+                    <div class="modal-content">
+                        <div class="modal-header">            
+                            <h5 class="modal-title" id="staticBackdropLabel">Seleccione empleado</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                    
+                        <div class="modal-body">
+                        <form [formGroup]="formGroup">
+                            <div class="form-group">
+                                <label for="empleado">Empleado</label>
+                                <select formControlName="userSolicitud" id="" [(ngModel)]="userSolicitud">
+                                    <option *ngFor="let usuario of usuarios"
+                                    [ngValue]="usuario"      
+                                    >
+                                        {{usuario.id == 1 ? ' Todos ': usuario.name + ' ' +usuario.lastName}}
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="click" class="btn btn-success" data-bs-dismiss="modal" (click)="onSubmit(userSolicitud)">Guardar</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Salir</button>
+                            </div>
+                        </form>    
+                    </div>        
+                </div>
+            </div>        
         </div>
 
 
     </div>
 </div>
+
+
 
