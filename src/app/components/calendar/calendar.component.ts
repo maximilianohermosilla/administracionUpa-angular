@@ -28,24 +28,15 @@ export class CalendarComponent implements OnInit {
   public events: any[] = [];
   public eventsTemp: Evento[] = [];  
   public eventsUpdate: Evento[] = [];  
+  public eventsDelete: Evento[] = [];  
   public tipoEventos: TipoEvento[] = [];
   public usuarios: Usuario[] = [];
   public options: any;
   public evento: Evento;    
-  userSolicitud: Usuario = {
-    name: '',
-    lastName: '',
-    user: '',
-    password: '',
-    email: '',
-    legajo: '',
-    fecha_nac: '',
-    color: '',
-    habilitado: false
-  };
+  userSolicitud: Usuario = {name: '', lastName: '', user: '', password: '', email: '', legajo: '', fecha_nac: '', color: '', habilitado: false};
 
-  constructor(private eventoService: EventoService, private tipoEventoService: TipoeventoService, private usuarioService: UsuarioService, private formBuilder: FormBuilder, private sant: DomSanitizer) { 
-
+  constructor(private eventoService: EventoService, private tipoEventoService: TipoeventoService, private usuarioService: UsuarioService,
+               private formBuilder: FormBuilder, private sant: DomSanitizer) { 
     this.formGroup = this.formBuilder.group({
       userSolicitud: ['', []]
     })
@@ -73,14 +64,14 @@ export class CalendarComponent implements OnInit {
 
   getTipoEvento(){
     this.tipoEventoService.getTipoEvento().subscribe(data =>{
-      console.log(data);
+      //console.log(data);
       this.tipoEventos = data;
     });
   }
 
   getUsuarios(){
     this.usuarioService.getUsuarios().subscribe(data =>{
-      console.log(data);
+      //console.log(data);
       this.usuarios = data;
     });
   }   
@@ -92,9 +83,10 @@ export class CalendarComponent implements OnInit {
 
   // BUTTONS //
   
-  public cleanEvents(){
+  cleanEvents(){
     console.log("Eventos temp: ", this.eventsTemp);
     console.log("Eventos update: ", this.eventsUpdate);
+    console.log("Eventos delete: ", this.eventsDelete);
   }
 
   saveEvents(){
@@ -102,6 +94,17 @@ export class CalendarComponent implements OnInit {
       element.id=null,
       console.log("save: ", element),
       this.eventoService.insertEvento(element)
+      this.eventoService.insertEvento(element).subscribe((element)=>(
+        this.ngOnInit()
+      ))
+    });
+    this.eventsUpdate.forEach(element => {
+      //element.id=null,
+      console.log("save update: ", element),
+      this.eventoService.insertEvento(element)
+      this.eventoService.updateEvento(element).subscribe((element)=>(
+        this.ngOnInit()
+      ))
     });
   }
 
@@ -180,8 +183,8 @@ export class CalendarComponent implements OnInit {
         this.eventDrop(eventClickEvent); 
       }, 
       eventDragStop: (eventDragStop) =>  {
-        //console.log("Eliminar: ", eventDragStop.event);
-        //this.eventDragStop(eventDragStop);
+        console.log("Eliminar: ", eventDragStop.event);
+        this.eventDragStop(eventDragStop);
       },  
       events: this.events           
     };
@@ -205,8 +208,7 @@ export class CalendarComponent implements OnInit {
   
       // EVENTOS RECIBIDOS EXTERNAMENTE //    
 
-  eventReceive(eventReceiveEvent){
-    this.viewModal = true;
+  eventReceive(eventReceiveEvent){    
       let esSolicitud: boolean = (eventReceiveEvent.event.backgroundColor == 'crimson');
       
       const year = eventReceiveEvent.event.start.getFullYear();
@@ -224,9 +226,9 @@ export class CalendarComponent implements OnInit {
         tipoEv = this.tipoEventos.find(tipo => tipo.id == 2);
       }
       if(esSolicitud){
+        this.viewModal = true;
         tipoEv = this.tipoEventos.find(tipo => tipo.id == Number(eventReceiveEvent.event.id));
         user = null;
-
       }  
 
       this.evento = {
@@ -249,17 +251,26 @@ export class CalendarComponent implements OnInit {
       this.eventsTemp.push(this.evento);
   }
 
-      // EVENTO ARRASTRADO FUERA ? //
+      // EVENTO ARRASTRADO FUERA //
 
   eventDragStop(eventDragStop) {
-    const result = this.eventsTemp.find(event => event.id == eventDragStop.event._instance.instanceId);
+      const result = this.eventsTemp.find(event => event.id == eventDragStop.event._instance.instanceId);
+      const resultFromDB = this.eventsUpdate.find(event => event.id == eventDragStop.event._def.publicId);
+      if(result != null){
         console.log("Resultado: ", result);
         const index = this.eventsTemp.indexOf(result);
-        //this.eventsTemp.splice(index,1);
-        //eventDragStop.event.remove();
+        this.eventsTemp.splice(index,1);
+      }
+      if(resultFromDB != null){
+        console.log("Resultado DB: ", resultFromDB);
+        const indexUpdate = this.eventsUpdate.indexOf(resultFromDB);
+        this.eventsUpdate.splice(indexUpdate,1);
+        this.eventsDelete.push(resultFromDB);
+      }
+      eventDragStop.event.remove();
   }
 
-      // EVENTO DROP //
+      // EVENTO DROPEADO //
       
   eventDrop(eventClickEvent) {
     
@@ -285,7 +296,7 @@ export class CalendarComponent implements OnInit {
       } 
      
       this.evento = {
-        id: eventClickEvent.event.id,
+        id: eventClickEvent.event._def.publicId,
         title: eventClickEvent.event.title,
         description: eventClickEvent.event.title,
         start: (year+ "-"+ ((month >9 ) ? month : "0"+month.toString()) + "-"+ ((date >9 ) ? date : "0"+date.toString()) + time + ":00"),
@@ -300,11 +311,11 @@ export class CalendarComponent implements OnInit {
         usuario: (this.events.find(event => event.id)).usuario
       }
 
-      console.log("evento en base: ", this.evento);
+      console.log("evento en base se guarda en eventsUpdate: ", this.evento);
       this.eventsUpdate.push(this.evento);
     }
     
-    // EVENTO NUEVO temporal//
+    // EVENTO NUEVO eventsTemp//
 
     else{
       console.log("Event drop nuevo!!!", eventClickEvent);  
@@ -328,7 +339,7 @@ export class CalendarComponent implements OnInit {
           }    
       }
 
-      // evento no existe (insert in lista)//
+      // evento no existe (pusheo en eventsTemp)//
       else{
         const time = (eventClickEvent.event.backgroundColor == 'crimson') ? '': (" "+(eventClickEvent.event.title).substring(0,5));  
         const year = eventClickEvent.event.start.getFullYear();
@@ -351,7 +362,7 @@ export class CalendarComponent implements OnInit {
           tipoEvento: null,
           usuario: null
         }
-        console.log("evento nuevo: ", this.evento);
+        console.log("evento nuevo se guarda en eventsTemp: ", this.evento);
         this.eventsTemp.push(this.evento);
       }     
 
@@ -372,11 +383,12 @@ export class CalendarComponent implements OnInit {
     const monthEnd = (Number(eventResizeEvent.event.end.getMonth())+1);
     const dateEnd = eventResizeEvent.event.end.getDate();  
     if(eventResizeEvent.event.source != null){
-      console.log("VIENE DE LA BASE!!!");
+      console.log("VIENE DE LA BASE!!! Resize");
       this.eventsUpdate[index].start = (yearStart+ "-"+ ((monthStart >9 ) ? monthStart : "0"+monthStart.toString()) + "-"+ ((dateStart >9 ) ? dateStart : "0"+dateStart.toString()) + time);
       this.eventsUpdate[index].end = (yearEnd+ "-"+ ((monthEnd >9 ) ? monthEnd : "0"+monthEnd.toString()) + "-"+ ((dateEnd >9 ) ? dateEnd : "0"+dateEnd.toString()) + time);
     }
     else{
+      console.log("Evento nuevo temp!!! Resize");
       this.eventsTemp[index].start = (yearStart+ "-"+ ((monthStart >9 ) ? monthStart : "0"+monthStart.toString()) + "-"+ ((dateStart >9 ) ? dateStart : "0"+dateStart.toString()) + time);
       this.eventsTemp[index].end = (yearEnd+ "-"+ ((monthEnd >9 ) ? monthEnd : "0"+monthEnd.toString()) + "-"+ ((dateEnd >9 ) ? dateEnd : "0"+dateEnd.toString()) + time);
     }

@@ -49,12 +49,15 @@ export class EventoService {
 
   insertEvento(evento: Evento): Observable<Evento>{   
     const data = {'evento': evento, 'idTipoEvento': Number(evento.tipoEvento.id), 'idUsuario': evento.usuario.id};
-    return this.http.post<Evento>(this.api+"/saveEvento/"+evento.usuario.id+"/"+evento.tipoEvento.id, evento);
+    const apiUrlsave = this.api+"/saveEvento/"+evento.usuario.id+"/"+evento.tipoEvento.id;
+    console.log(apiUrlsave);
+    return this.http.post<Evento>(apiUrlsave, evento);
   }
 
 
   updateEvento(evento: Evento): Observable<Evento>{
     const updateUrl = `${this.api}/${evento.id}`
+    console.log(evento);
     return this.http.put<Evento>(updateUrl, evento, {responseType: "text" as "json"}).pipe(
       tap(() => {
          this.refresh$.next();       

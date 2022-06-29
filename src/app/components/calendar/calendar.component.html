@@ -23,7 +23,8 @@
             <li *ngFor="let usuario of usuarios" style="list-style-type: none;">
                 <div *ngIf="usuario.id>1" class='fc-event turno' [ngStyle]="{'background-color': usuario.color, 'border-color': usuario.color}" id="{{usuario.id}}">20:00 {{usuario.name}}</div>
             </li>
-           
+            <br><br>
+            <button class="btn btn-lg btn-success float-start" style="width: 100%" (click)="saveEvents()"><i class="bi bi-calendar-check"></i>Guardar</button>
         </div>
 
         <!-- COMPONENTE FULL-CALENDAR -->
@@ -54,13 +55,7 @@
                     data-bs-toggle="modal" data-bs-target="#solicitudModal"
                     >{{tipo.descripcion}}</div>
             </li>
-            <br>
-
-            
-            
-
-
-
+            <br>  
 
             <!-- FILTRO TIPO EVENTO -->
             <div class="">
@@ -85,16 +80,12 @@
                     </option>
                 </select>
             </div>
+
+            <br><br>
+
+            <button class="btn btn-lg btn-danger float-end" style="width: 100%" (click)="cleanEvents()" data-bs-toggle="modal" data-bs-target="#solicitudModal"><i class="bi bi-trash3"></i>Limpiar</button>
         </div>
 
-        
-
-        <!-- BUTTONS -->
-        <div class="">
-            <br>
-            <button class="btn btn-lg btn-success float-start" style="width: 33%" (click)="saveEvents()"><i class="bi bi-calendar-check d-none"></i>Guardar</button>
-            <button class="btn btn-lg btn-danger float-end" style="width: 33%" (click)="cleanEvents()" data-bs-toggle="modal" data-bs-target="#solicitudModal"><i class="bi bi-trash3 d-none"></i>Limpiar</button>
-        </div>
 
         <div class="modal" id="solicitudModal" [ngStyle]="{'display': viewModal ? 'block' : 'none', 'opacity': 1}">      
     

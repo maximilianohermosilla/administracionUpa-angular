@@ -50,7 +50,7 @@ i{
     background: crimson;
     color: #FFFFFF; 
     border-color: crimson;
-    height: 16px;
+    height: 25px;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -63,7 +63,7 @@ i{
 
 .turno{
     color: #FFFFFF; 
-    height: 16px;
+    height: 25px;
     display: flex;
     flex-direction: row;
     justify-content: center;
