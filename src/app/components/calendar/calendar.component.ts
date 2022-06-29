@@ -25,6 +25,7 @@ export class CalendarComponent implements OnInit {
   draggableEl1;
   draggableEl2;
   viewModal: boolean = false;
+  viewDeleteModal: boolean = false;
   public events: any[] = [];
   public eventsTemp: Evento[] = [];  
   public eventsUpdate: Evento[] = [];  
@@ -76,9 +77,17 @@ export class CalendarComponent implements OnInit {
     });
   }   
 
-  onSubmit(userSolicitud: Usuario){        
-    console.log(userSolicitud);
+  onSubmit(userSolicitud: Usuario){            
+    this.userSolicitud = userSolicitud;
+    this.evento.usuario = this.userSolicitud;
+    this.evento.title = this.evento.title + " (" + this.evento.usuario.name + ")";
+    this.evento.description = this.evento.description + " (" + this.evento.usuario.name + ")";
     this.viewModal = false;
+    return this.userSolicitud;
+  }
+
+  onDelete(){            
+    console.log("Eventos eliminados");
   }
 
   // BUTTONS //
@@ -224,12 +233,7 @@ export class CalendarComponent implements OnInit {
       }
       if((eventReceiveEvent.event.title).substring(0,5) == "20:00"){
         tipoEv = this.tipoEventos.find(tipo => tipo.id == 2);
-      }
-      if(esSolicitud){
-        this.viewModal = true;
-        tipoEv = this.tipoEventos.find(tipo => tipo.id == Number(eventReceiveEvent.event.id));
-        user = null;
-      }  
+      }      
 
       this.evento = {
           id: eventReceiveEvent.event._instance.instanceId,
@@ -247,25 +251,39 @@ export class CalendarComponent implements OnInit {
           usuario: user
       }
 
+      if(esSolicitud){
+        this.evento.tipoEvento = tipoEv = this.tipoEventos.find(tipo => tipo.id == Number(eventReceiveEvent.event.id));         
+        this.viewModal = true;    
+      } 
       console.log("evento ", this.evento);
       this.eventsTemp.push(this.evento);
+       
   }
+ 
 
       // EVENTO ARRASTRADO FUERA //
 
   eventDragStop(eventDragStop) {
-      const result = this.eventsTemp.find(event => event.id == eventDragStop.event._instance.instanceId);
-      const resultFromDB = this.eventsUpdate.find(event => event.id == eventDragStop.event._def.publicId);
-      if(result != null){
-        console.log("Resultado: ", result);
-        const index = this.eventsTemp.indexOf(result);
+      const eventoTemp = this.eventsTemp.find(event => event.id == eventDragStop.event._instance.instanceId);
+      const eventoUpdate = this.eventsUpdate.find(event => event.id == eventDragStop.event._def.publicId);
+      const eventoDelete = this.events.find(event => event.id == eventDragStop.event._def.publicId);
+      
+      if(eventoTemp != null){
+        console.log("Resultado: ", eventoTemp);
+        const index = this.eventsTemp.indexOf(eventoTemp);
         this.eventsTemp.splice(index,1);
       }
-      if(resultFromDB != null){
-        console.log("Resultado DB: ", resultFromDB);
-        const indexUpdate = this.eventsUpdate.indexOf(resultFromDB);
+      if(eventoUpdate != null){
+        console.log("Resultado DB: ", eventoUpdate);
+        const indexUpdate = this.eventsUpdate.indexOf(eventoUpdate);
+        this.eventsUpdate.push(eventoUpdate);
         this.eventsUpdate.splice(indexUpdate,1);
-        this.eventsDelete.push(resultFromDB);
+      }
+      if(eventoDelete != null){
+        console.log("Resultado DB to delete: ", eventoDelete);
+        const indexDelete = this.events.indexOf(eventoDelete);
+        this.eventsDelete.push(eventoDelete);
+        this.events.splice(indexDelete,1);
       }
       eventDragStop.event.remove();
   }

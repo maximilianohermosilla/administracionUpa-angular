@@ -83,7 +83,7 @@
 
             <br><br>
 
-            <button class="btn btn-lg btn-danger float-end" style="width: 100%" (click)="cleanEvents()" data-bs-toggle="modal" data-bs-target="#solicitudModal"><i class="bi bi-trash3"></i>Limpiar</button>
+            <button class="btn btn-lg btn-danger float-end" style="width: 100%" (click)="cleanEvents()" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash3"></i>Limpiar</button>
         </div>
 
 
@@ -118,7 +118,42 @@
                 </div>
             </div>        
         </div>
+        
+        <div class="modal" id="deleteModal" [ngStyle]="{'display': viewDeleteModal ? 'block' : 'none', 'opacity': 1}">      
+    
+            <div class="modal-dialog" >
+                <div class="modal-content">
+                    <div class="modal-header">            
+                        <h5 class="modal-title">¿Está seguro/a de cancelar los cambios?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                
+                    <div class="modal-body">
+                    <form [formGroup]="formGroup">
+                        <div class="form-group">
+                            <h5>Eventos nuevos: </h5>
+                            <li *ngFor="let eventoTemp of eventsTemp" style="list-style-type: none;">
+                                <div >{{eventoTemp.title}} - {{eventoTemp.start}}</div>
+                            </li>
+                            <h5>Eventos actualizados: </h5>
+                            <li *ngFor="let eventosUpdate of eventsUpdate" style="list-style-type: none;">
+                                <div >{{eventosUpdate.title}} - {{eventosUpdate.start}}</div>
+                            </li>
+                            <h5>Eventos eliminados: </h5>
+                            <li *ngFor="let eventosDelete of eventsDelete" style="list-style-type: none;">
+                                <div >{{eventosDelete.title}} - {{eventosDelete.start}}</div>
+                            </li>
+                        </div>
 
+                        <div class="modal-footer">
+                            <button type="click" class="btn btn-success" data-bs-dismiss="modal" (click)="onDelete()">Confirmar</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Salir</button>
+                        </div>
+                    </form>    
+                </div>        
+            </div>
+        </div>        
+    </div>
 
     </div>
 </div>
