@@ -133,15 +133,15 @@
                         <div class="form-group">
                             <h5>Eventos nuevos: </h5>
                             <li *ngFor="let eventoTemp of eventsTemp" style="list-style-type: none;">
-                                <div >{{eventoTemp.title}} - {{eventoTemp.start}}</div>
+                                <div >{{eventoTemp.id}} - {{eventoTemp.title}} - {{eventoTemp.start}}</div>
                             </li>
                             <h5>Eventos actualizados: </h5>
                             <li *ngFor="let eventosUpdate of eventsUpdate" style="list-style-type: none;">
-                                <div >{{eventosUpdate.title}} - {{eventosUpdate.start}}</div>
+                                <div >{{eventosUpdate.id}} - {{eventosUpdate.title}} - {{eventosUpdate.start}}</div>
                             </li>
                             <h5>Eventos eliminados: </h5>
                             <li *ngFor="let eventosDelete of eventsDelete" style="list-style-type: none;">
-                                <div >{{eventosDelete.title}} - {{eventosDelete.start}}</div>
+                                <div >{{eventosDelete.id}} - {{eventosDelete.title}} - {{eventosDelete.start}}</div>
                             </li>
                         </div>
 

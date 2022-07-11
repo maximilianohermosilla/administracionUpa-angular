@@ -58,7 +58,7 @@ export class CalendarComponent implements OnInit {
 
   getEventos(){
     this.eventoService.getEventosAll().subscribe(data =>{
-      console.log(data);
+      //console.log(data);
       this.events = data;
     });
   }
@@ -87,7 +87,8 @@ export class CalendarComponent implements OnInit {
   }
 
   onDelete(){            
-    console.log("Eventos eliminados");
+    //console.log("Eventos eliminados");
+    window.location.reload();
   }
 
   // BUTTONS //
@@ -99,22 +100,41 @@ export class CalendarComponent implements OnInit {
   }
 
   saveEvents(){
-    this.eventsTemp.forEach(element => {
-      element.id=null,
-      console.log("save: ", element),
-      this.eventoService.insertEvento(element)
-      this.eventoService.insertEvento(element).subscribe((element)=>(
-        this.ngOnInit()
-      ))
-    });
-    this.eventsUpdate.forEach(element => {
-      //element.id=null,
-      console.log("save update: ", element),
-      this.eventoService.insertEvento(element)
-      this.eventoService.updateEvento(element).subscribe((element)=>(
-        this.ngOnInit()
-      ))
-    });
+    if(this.eventsTemp.length > 0){
+      this.eventsTemp.forEach(element => {
+        //element.id=null,
+        //console.log("save: ", element),
+        //this.eventoService.insertEvento(element)
+        this.eventoService.insertEvento(element).subscribe((element)=>(
+          this.ngOnInit()
+        ))
+      });
+    }
+    if(this.eventsUpdate.length > 0){
+      this.eventsUpdate.forEach(elementUpdate => {
+        //elementUpdate.id=null,
+        //console.log("save update: ", element),
+        //this.eventoService.insertEvento(element)
+        this.eventoService.updateEvento(elementUpdate).subscribe((element)=>(
+          this.ngOnInit()
+        ))
+      });
+    }
+    if(this.eventsDelete.length > 0){
+      this.eventsDelete.forEach(elementDelete => {
+        //element.id=null,
+        //console.log("save update: ", element),
+        //this.eventoService.insertEvento(element)
+        this.eventoService.deleteEvento(elementDelete).subscribe((element)=>(
+          this.ngOnInit()
+        ))
+      });
+    }
+    this.eventsTemp=[];
+    this.eventsUpdate=[];
+    this.eventsDelete=[];
+    this.events.splice(0);
+    this.getEventos();
   }
 
   // NEWS DRAGGABLES //
@@ -271,19 +291,24 @@ export class CalendarComponent implements OnInit {
       if(eventoTemp != null){
         console.log("Resultado: ", eventoTemp);
         const index = this.eventsTemp.indexOf(eventoTemp);
-        this.eventsTemp.splice(index,1);
+        //this.eventsTemp.splice(index,1);
+        eventDragStop.event.remove();
+        return;
       }
       if(eventoUpdate != null){
         console.log("Resultado DB: ", eventoUpdate);
         const indexUpdate = this.eventsUpdate.indexOf(eventoUpdate);
         this.eventsUpdate.push(eventoUpdate);
         this.eventsUpdate.splice(indexUpdate,1);
+        eventDragStop.event.remove();
+        return;
       }
       if(eventoDelete != null){
         console.log("Resultado DB to delete: ", eventoDelete);
         const indexDelete = this.events.indexOf(eventoDelete);
         this.eventsDelete.push(eventoDelete);
-        this.events.splice(indexDelete,1);
+        //this.events.splice(indexDelete,1);
+        //return;
       }
       eventDragStop.event.remove();
   }
@@ -291,45 +316,81 @@ export class CalendarComponent implements OnInit {
       // EVENTO DROPEADO //
       
   eventDrop(eventClickEvent) {
-    
     // EVENTO GUARDADO EN BASE //
     // hago update y pusheo a lista eventsUpdate //
+    const eventoTemp = this.eventsTemp.find(event => event.id.toString() == eventClickEvent.event._instance.instanceId.toString());
+    const indexTemp = this.eventsTemp.indexOf(eventoTemp);  
+    const eventoDelete = this.eventsDelete.find(event => event.id == eventClickEvent.event._def.publicId);
+    const indexDelete = this.eventsDelete.indexOf(eventoDelete);
+    const eventoUpdate = this.eventsUpdate.find(event => event.id == eventClickEvent.event._def.publicId);
+    const indexUpdate = this.eventsUpdate.indexOf(eventoUpdate);
+    console.log(this.events);
+    console.log(eventClickEvent);
+    console.log(eventoUpdate);
+    console.log(indexUpdate);
     if(eventClickEvent.event.source != null){
       console.log("VIENE DE LA BASE!!!");
       //console.log("Evento en base: ",eventClickEvent.event);
-      let esSolicitud: boolean = (eventClickEvent.event.backgroundColor == 'crimson');
-      
-      const year = eventClickEvent.event.start.getFullYear();
-      const month = (Number(eventClickEvent.event.start.getMonth())+1);
-      const date = eventClickEvent.event.start.getDate();  
-      const hour = eventClickEvent.event.start.getHours();
-      const _end = (eventClickEvent.event.end === null) ? '': (eventClickEvent.event.end.getFullYear()+ "-"+ (Number(eventClickEvent.event.end.getMonth())+1)+ "-"+ eventClickEvent.event.end.getDate());        
-      let time;
+      let esSolicitud: boolean = (eventClickEvent.event.backgroundColor == 'crimson');    
 
-      if(hour<10){
-        time = " 0"+hour.toString();          
+      const yearStart = eventClickEvent.event.start.getFullYear();
+      const monthStart = (Number(eventClickEvent.event.start.getMonth())+1);
+      const dateStart = eventClickEvent.event.start.getDate();  
+      const hourStart = eventClickEvent.event.start.getHours();
+
+      var yearEnd;
+      var monthEnd;
+      var dateEnd;
+      var hourEnd;
+
+      if (eventClickEvent.event.end != null){
+        yearEnd = eventClickEvent.event.end.getFullYear();
+        monthEnd = (Number(eventClickEvent.event.end.getMonth())+1);
+        dateEnd = eventClickEvent.event.end.getDate();  
+        hourEnd = eventClickEvent.event.end.getHours();
       }
       else{
-        time = (esSolicitud) ? '': (' ' + eventClickEvent.event.start.getHours());  
+        yearEnd ='';
+        monthEnd = '';
+        dateEnd = '';
+        hourEnd = '';
+      }
+
+      let timeStart;
+      let timeEnd;
+
+      if(hourStart<10){
+        timeStart = " 0"+hourStart.toString()  + ":00";          
+      }
+      else{
+        timeStart = (esSolicitud) ? '': (' ' + eventClickEvent.event.start.getHours());  
+      } 
+      if(hourEnd<10){
+        timeEnd = " 0"+hourEnd.toString()  + ":00";          
+      }
+      else{
+        timeEnd = (esSolicitud) ? '': (' ' + eventClickEvent.event.end.getHours());  
       } 
      
       this.evento = {
         id: eventClickEvent.event._def.publicId,
         title: eventClickEvent.event.title,
         description: eventClickEvent.event.title,
-        start: (year+ "-"+ ((month >9 ) ? month : "0"+month.toString()) + "-"+ ((date >9 ) ? date : "0"+date.toString()) + time + ":00"),
-        end: _end,
+        start: (yearStart+ "-"+ ((monthStart >9 ) ? monthStart : "0"+monthStart.toString()) + "-"+ ((dateStart >9 ) ? dateStart : "0"+dateStart.toString()) + timeStart),
+        end: (yearEnd+ "-"+ ((monthEnd >9 ) ? monthEnd : "0"+monthEnd.toString()) + "-"+ ((dateEnd >9 ) ? dateEnd : "0"+dateEnd.toString()) + timeEnd),
         backgroundColor: eventClickEvent.event.backgroundColor,
         borderColor: eventClickEvent.event.borderColor,
         color: "#FFFFFF",
         editable: true,
         enabled: true,
         newEvent: eventClickEvent.event.newEvent,
-        tipoEvento: (this.events.find(event => event.id)).tipoEvento,
-        usuario: (this.events.find(event => event.id)).usuario
+        tipoEvento: (this.events.find(event => event.id == eventClickEvent.event.id)).tipoEvento,
+        usuario: (this.events.find(event => event.id == eventClickEvent.event.id)).usuario
       }
-
-      console.log("evento en base se guarda en eventsUpdate: ", this.evento);
+      //console.log("evento en base se guarda en eventsUpdate: ", this.evento);
+      if(eventoTemp != undefined){this.eventsTemp.splice(indexTemp,1)};
+      if(eventoDelete != undefined){this.eventsDelete.splice(indexDelete,1)}; 
+      if(eventoUpdate != undefined){this.eventsUpdate.splice(indexUpdate,1)};
       this.eventsUpdate.push(this.evento);
     }
     
@@ -337,24 +398,33 @@ export class CalendarComponent implements OnInit {
 
     else{
       console.log("Event drop nuevo!!!", eventClickEvent);  
-
-      const result = this.eventsTemp.find(event => event.id == eventClickEvent.event._instance.instanceId);
-      const index = this.eventsTemp.indexOf(result);
-
+       
+      var _tipoEvento;
+      var _usuario;
+      _tipoEvento = this.eventsTemp[indexTemp].tipoEvento;
+      _usuario = this.eventsTemp[indexTemp].usuario;
+      
+      console.log(_tipoEvento);
+      console.log(_usuario);
+      console.log(eventoTemp);
+      console.log(indexTemp);
       // evento en lista de eventos nuevos (eventsTemp update)//
-      if(result != null){
+      if(eventoTemp != null){
         const yearStart = eventClickEvent.event.start.getFullYear();
         const monthStart = (Number(eventClickEvent.event.start.getMonth())+1);
         const dateStart = eventClickEvent.event.start.getDate(); 
         const time = (eventClickEvent.event.backgroundColor == 'crimson') ? '': (" "+(eventClickEvent.event.title).substring(0,5));
-        this.eventsTemp[index].start = (yearStart+ "-"+ ((monthStart >9 ) ? monthStart : "0"+monthStart.toString()) + "-"+ ((dateStart >9 ) ? dateStart : "0"+dateStart.toString()) + time);        
+        this.eventsTemp[indexTemp].start = (yearStart+ "-"+ ((monthStart >9 ) ? monthStart : "0"+monthStart.toString()) + "-"+ ((dateStart >9 ) ? dateStart : "0"+dateStart.toString()) + time);        
        
         if (eventClickEvent.event.end != null){            
           const yearEnd = eventClickEvent.event.end.getFullYear();
           const monthEnd = (Number(eventClickEvent.event.end.getMonth())+1);
           const dateEnd = eventClickEvent.event.end.getDate();              
-          this.eventsTemp[index].end = (yearEnd+ "-"+ ((monthEnd >9 ) ? monthEnd : "0"+monthEnd.toString()) + "-"+ ((dateEnd >9 ) ? dateEnd : "0"+dateEnd.toString()) + time);          
-          }    
+          this.eventsTemp[indexTemp].end = (yearEnd+ "-"+ ((monthEnd >9 ) ? monthEnd : "0"+monthEnd.toString()) + "-"+ ((dateEnd >9 ) ? dateEnd : "0"+dateEnd.toString()) + time);          
+        }  
+        
+        
+        //this.eventsTemp.splice(indexTemp,1);
       }
 
       // evento no existe (pusheo en eventsTemp)//
@@ -365,9 +435,16 @@ export class CalendarComponent implements OnInit {
         const date = eventClickEvent.event.start.getDate();    
         const _end = (eventClickEvent.event.end === null) ? '': (eventClickEvent.event.end.getFullYear()+ "-"+ (Number(eventClickEvent.event.end.getMonth())+1)+ "-"+ eventClickEvent.event.end.getDate());        
         //console.log(_end);
+        var _title;
+        if(((eventClickEvent.event.title).substring(0,5) == "08:00") || ((eventClickEvent.event.title).substring(0,5) == "20:00")){
+          _title = eventClickEvent.event.title.substring(6,100);          
+        }
+        else{
+          _title = eventClickEvent.event.title;
+        }
         this.evento = {
           id: eventClickEvent.event._instance.instanceId,
-          title: eventClickEvent.event.title,
+          title: _title,
           description: eventClickEvent.event.title,
           start: (year+ "-"+ ((month >9 ) ? month : "0"+month.toString()) + "-"+ ((date >9 ) ? date : "0"+date.toString()) + time),
           end: _end,
@@ -377,8 +454,10 @@ export class CalendarComponent implements OnInit {
           editable: true,
           enabled: true,
           newEvent: eventClickEvent.event.newEvent,
-          tipoEvento: null,
-          usuario: null
+          //tipoEvento: (this.eventsTemp.find(event => event.id == eventClickEvent.event.id)).tipoEvento,
+          //usuario: (this.eventsTemp.find(event => event.id == eventClickEvent.event.id)).usuario
+          tipoEvento: _tipoEvento,
+          usuario: _usuario
         }
         console.log("evento nuevo se guarda en eventsTemp: ", this.evento);
         this.eventsTemp.push(this.evento);
@@ -392,23 +471,38 @@ export class CalendarComponent implements OnInit {
 
   eventResize(eventResizeEvent) {
     const time = (eventResizeEvent.event.backgroundColor == 'crimson') ? '': (" "+(eventResizeEvent.event.title).substring(0,5));
+
     const result = this.eventsTemp.find(event => event.id == eventResizeEvent.event._instance.instanceId);
     const index = this.eventsTemp.indexOf(result);
+    console.log(result);
+    console.log(index);
+    
+    const resultDB = this.events.find(event => event.id == eventResizeEvent.event.id);
+    const indexDB = this.events.indexOf(resultDB);
+    console.log(resultDB);
+    console.log(indexDB);
+
     const yearStart = eventResizeEvent.event.start.getFullYear();
     const monthStart = (Number(eventResizeEvent.event.start.getMonth())+1);
-    const dateStart = eventResizeEvent.event.start.getDate();    
+    const dateStart = eventResizeEvent.event.start.getDate();   
+
     const yearEnd = eventResizeEvent.event.end.getFullYear();
     const monthEnd = (Number(eventResizeEvent.event.end.getMonth())+1);
     const dateEnd = eventResizeEvent.event.end.getDate();  
+
     if(eventResizeEvent.event.source != null){
       console.log("VIENE DE LA BASE!!! Resize");
-      this.eventsUpdate[index].start = (yearStart+ "-"+ ((monthStart >9 ) ? monthStart : "0"+monthStart.toString()) + "-"+ ((dateStart >9 ) ? dateStart : "0"+dateStart.toString()) + time);
-      this.eventsUpdate[index].end = (yearEnd+ "-"+ ((monthEnd >9 ) ? monthEnd : "0"+monthEnd.toString()) + "-"+ ((dateEnd >9 ) ? dateEnd : "0"+dateEnd.toString()) + time);
+      resultDB.start = (yearStart+ "-"+ ((monthStart >9 ) ? monthStart : "0"+monthStart.toString()) + "-"+ ((dateStart >9 ) ? dateStart : "0"+dateStart.toString()) + time);
+      resultDB.end = (yearEnd+ "-"+ ((monthEnd >9 ) ? monthEnd : "0"+monthEnd.toString()) + "-"+ ((dateEnd >9 ) ? dateEnd : "0"+dateEnd.toString()) + time);
+      const resultUpdate = this.eventsUpdate.find(event => event.id == resultDB.id);
+      const indexUpdate = this.eventsUpdate.indexOf(resultUpdate);
+      this.eventsUpdate.splice(indexUpdate, 1);
+      this.eventsUpdate.push(resultDB);
     }
     else{
       console.log("Evento nuevo temp!!! Resize");
-      this.eventsTemp[index].start = (yearStart+ "-"+ ((monthStart >9 ) ? monthStart : "0"+monthStart.toString()) + "-"+ ((dateStart >9 ) ? dateStart : "0"+dateStart.toString()) + time);
-      this.eventsTemp[index].end = (yearEnd+ "-"+ ((monthEnd >9 ) ? monthEnd : "0"+monthEnd.toString()) + "-"+ ((dateEnd >9 ) ? dateEnd : "0"+dateEnd.toString()) + time);
+      result.start = (yearStart+ "-"+ ((monthStart >9 ) ? monthStart : "0"+monthStart.toString()) + "-"+ ((dateStart >9 ) ? dateStart : "0"+dateStart.toString()) + time);
+      result.end = (yearEnd+ "-"+ ((monthEnd >9 ) ? monthEnd : "0"+monthEnd.toString()) + "-"+ ((dateEnd >9 ) ? dateEnd : "0"+dateEnd.toString()) + time);
     }
   }
 

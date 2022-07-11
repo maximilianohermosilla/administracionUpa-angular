@@ -34,7 +34,7 @@ export class EventoService {
   }
 
   getEventosAll(): Observable<any>{
-    return this.http.get<Evento[]>(this.api+'DTO').pipe(
+    return this.http.get<Evento[]>(this.api).pipe(
       tap(() => {
          this._refresh$.next();       
       })
