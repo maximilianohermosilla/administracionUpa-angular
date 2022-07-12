@@ -1,9 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin, {Draggable} from '@fullcalendar/interaction';
-import ExternalDraggable from '@fullcalendar/interaction/interactions-external/ExternalDraggable';
 import esLocale from '@fullcalendar/core/locales/es';
 import { EventoService } from 'src/app/services/evento.service';
 import { Evento } from 'src/app/models/evento';
@@ -58,21 +56,18 @@ export class CalendarComponent implements OnInit {
 
   getEventos(){
     this.eventoService.getEventosAll().subscribe(data =>{
-      //console.log(data);
       this.events = data;
     });
   }
 
   getTipoEvento(){
     this.tipoEventoService.getTipoEvento().subscribe(data =>{
-      //console.log(data);
       this.tipoEventos = data;
     });
   }
 
   getUsuarios(){
     this.usuarioService.getUsuarios().subscribe(data =>{
-      //console.log(data);
       this.usuarios = data;
     });
   }   
@@ -86,14 +81,14 @@ export class CalendarComponent implements OnInit {
     return this.userSolicitud;
   }
 
-  onDelete(){            
-    //console.log("Eventos eliminados");
+  onDelete(){
     window.location.reload();
   }
 
   // BUTTONS //
   
   cleanEvents(){
+    console.log("Eventos: ", this.events);
     console.log("Eventos temp: ", this.eventsTemp);
     console.log("Eventos update: ", this.eventsUpdate);
     console.log("Eventos delete: ", this.eventsDelete);
@@ -102,19 +97,14 @@ export class CalendarComponent implements OnInit {
   saveEvents(){
     if(this.eventsTemp.length > 0){
       this.eventsTemp.forEach(element => {
-        //element.id=null,
-        //console.log("save: ", element),
-        //this.eventoService.insertEvento(element)
         this.eventoService.insertEvento(element).subscribe((element)=>(
+          this.setOptions(),
           this.ngOnInit()
         ))
       });
     }
     if(this.eventsUpdate.length > 0){
       this.eventsUpdate.forEach(elementUpdate => {
-        //elementUpdate.id=null,
-        //console.log("save update: ", element),
-        //this.eventoService.insertEvento(element)
         this.eventoService.updateEvento(elementUpdate).subscribe((element)=>(
           this.ngOnInit()
         ))
@@ -122,9 +112,6 @@ export class CalendarComponent implements OnInit {
     }
     if(this.eventsDelete.length > 0){
       this.eventsDelete.forEach(elementDelete => {
-        //element.id=null,
-        //console.log("save update: ", element),
-        //this.eventoService.insertEvento(element)
         this.eventoService.deleteEvento(elementDelete).subscribe((element)=>(
           this.ngOnInit()
         ))
@@ -135,6 +122,7 @@ export class CalendarComponent implements OnInit {
     this.eventsDelete=[];
     this.events.splice(0);
     this.getEventos();
+    this.ngOnInit();
   }
 
   // NEWS DRAGGABLES //
@@ -200,11 +188,9 @@ export class CalendarComponent implements OnInit {
         console.log("Event CLICKED !!!", eventClickEvent);
       },  
       eventReceive: (eventReceiveEvent) => {
-        //console.log(eventReceiveEvent);
         this.eventReceive(eventReceiveEvent);
       },
       eventResize: (eventResizeEvent) => {
-        //console.log(eventResizeEvent);
         this.eventResize(eventResizeEvent);          
       },
       eventDrop: (eventClickEvent) =>  {
@@ -422,9 +408,6 @@ export class CalendarComponent implements OnInit {
           const dateEnd = eventClickEvent.event.end.getDate();              
           this.eventsTemp[indexTemp].end = (yearEnd+ "-"+ ((monthEnd >9 ) ? monthEnd : "0"+monthEnd.toString()) + "-"+ ((dateEnd >9 ) ? dateEnd : "0"+dateEnd.toString()) + time);          
         }  
-        
-        
-        //this.eventsTemp.splice(indexTemp,1);
       }
 
       // evento no existe (pusheo en eventsTemp)//
@@ -454,8 +437,6 @@ export class CalendarComponent implements OnInit {
           editable: true,
           enabled: true,
           newEvent: eventClickEvent.event.newEvent,
-          //tipoEvento: (this.eventsTemp.find(event => event.id == eventClickEvent.event.id)).tipoEvento,
-          //usuario: (this.eventsTemp.find(event => event.id == eventClickEvent.event.id)).usuario
           tipoEvento: _tipoEvento,
           usuario: _usuario
         }

@@ -12,19 +12,15 @@
                 <i class="bi bi-calendar-plus"></i> <strong>TURNOS</strong>
             </div>
 
-            <br>
-            <strong>Turno Mañana</strong>
+            <strong class="strongTitle">Turno Mañana</strong>
             <li *ngFor="let usuario of usuarios" style="list-style-type: none;">
                 <div *ngIf="usuario.id>1" class='fc-event turno' [ngStyle]="{'background-color': usuario.color, 'border-color': usuario.color}" id="{{usuario.id}}">08:00 {{usuario.name}}</div>
             </li>
-
-            <br>
-            <strong>Turno Noche</strong>
+            
+            <strong class="strongTitle">Turno Noche</strong>
             <li *ngFor="let usuario of usuarios" style="list-style-type: none;">
                 <div *ngIf="usuario.id>1" class='fc-event turno' [ngStyle]="{'background-color': usuario.color, 'border-color': usuario.color}" id="{{usuario.id}}">20:00 {{usuario.name}}</div>
-            </li>
-            <br><br>
-            <button class="btn btn-lg btn-success float-start" style="width: 100%" (click)="saveEvents()"><i class="bi bi-calendar-check"></i>Guardar</button>
+            </li>            
         </div>
 
         <!-- COMPONENTE FULL-CALENDAR -->
@@ -47,20 +43,18 @@
             <div class="card">
                 <i class="bi bi-clipboard2-check"></i><strong>SOLICITUDES</strong>
             </div>
-            
-            <br>
-            <strong> Arrastre las solicitudes</strong>
+                      
+            <strong class="strongTitle"> Arrastre las solicitudes</strong>
             <li *ngFor="let tipo of tipoEventos" style="list-style-type: none;">
                 <div *ngIf="tipo.id>2" class='fc-event specialEvent' style="background-color: crimson; border-color: #000000" id="{{tipo.id}}"
                     data-bs-toggle="modal" data-bs-target="#solicitudModal"
                     >{{tipo.descripcion}}</div>
             </li>
-            <br>  
-
+   
             <!-- FILTRO TIPO EVENTO -->
             <div class="">
-                <p>Filtro:</p>
-                <select name="cbTipo" id="cbTipo">
+                <p style="margin-top: 10px; margin-bottom:0px">Filtro:</p>
+                <select name="cbTipo" id="cbTipo" style="width: 100%">
                     <option value="">Todos</option>
                     <option *ngFor="let tipo of tipoEventos"                  
                     >
@@ -68,12 +62,11 @@
                     </option>
                 </select>
             </div>
-            <br>
 
             <!-- FILTRO EMPLEADOS -->
             <div class="">
-                <p>Empleados:</p>
-                <select name="cbUsuarios" id="cbUsuarios">
+                <p style="margin-top: 10px; margin-bottom:0px">Empleados:</p>
+                <select name="cbUsuarios" id="cbUsuarios" style="width: 100%">
                     <option *ngFor="let usuario of usuarios"                  
                     >
                         {{usuario.id == 1 ? ' Todos ': usuario.name + ' ' +usuario.lastName}}
@@ -81,8 +74,8 @@
                 </select>
             </div>
 
-            <br><br>
-
+            <br>
+            <button class="btn btn-lg btn-success float-start" style="width: 100%; margin-bottom: 10px" (click)="saveEvents()"><i class="bi bi-calendar-check"></i>Guardar</button>            
             <button class="btn btn-lg btn-danger float-end" style="width: 100%" (click)="cleanEvents()" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash3"></i>Limpiar</button>
         </div>
 

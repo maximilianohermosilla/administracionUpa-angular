@@ -131,3 +131,9 @@ i{
     padding-right: 3px;
     padding-left:3px;
   }
+
+  .strongTitle{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
