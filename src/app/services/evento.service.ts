@@ -25,32 +25,48 @@ export class EventoService {
     return this._refresh$;
   }
 
-  getEventos(): Observable<any>{
-    return this.http.get<Evento[]>(this.api).pipe(
-      tap(() => {
-         this._refresh$.next();       
-      })
-    )
-  }
-
+  
   getEventosAll(): Observable<any>{
     return this.http.get<Evento[]>(this.api).pipe(
       tap(() => {
+        this._refresh$.next();       
+      })
+      )
+    }
+    
+  getEventosUser(idUsuario: number): Observable<any>{
+    const apiUser = `${this.api}/usuario/${idUsuario}`
+    return this.http.get<Evento[]>(apiUser).pipe(
+      tap(() => {
+          this._refresh$.next();       
+      })
+    )
+  }
+    
+  getEventosTipoEvento(idTipoEvento: number): Observable<any>{
+    const apiTipoEvento = `${this.api}/tipoEvento/${idTipoEvento}`
+    return this.http.get<Evento[]>(apiTipoEvento).pipe(
+      tap(() => {
+          this._refresh$.next();       
+      })
+    )
+  }
+
+  getEventosFilter(idUsuario: number, idTipoEvento: number): Observable<any>{
+    const apiFilter = `${this.api}/filter/${idUsuario}/${idTipoEvento}`
+    return this.http.get<Evento[]>(apiFilter).pipe(
+      tap(() => {
          this._refresh$.next();       
       })
     )
   }
 
-  // insertEvento(evento: Evento): Observable<Evento>{   
-  //   const data = {'evento': evento, 'idTipoEvento': Number(evento.tipoEvento.id), 'idUsuario': evento.usuario.id};
-  //   console.log(data);
-  //   return this.http.post<Evento>(this.api+"/save", data);
-  // }
-
-  insertEvento(evento: Evento): Observable<Evento>{   
+  insertEvento(evento: Evento): Observable<Evento>{ 
+    evento.id=null;  
+    console.log(evento);
     const data = {'evento': evento, 'idTipoEvento': Number(evento.tipoEvento.id), 'idUsuario': evento.usuario.id};
     const apiUrlsave = this.api+"/saveEvento/"+evento.usuario.id+"/"+evento.tipoEvento.id;
-    console.log(apiUrlsave);
+    //console.log(apiUrlsave);
     return this.http.post<Evento>(apiUrlsave, evento);
   }
 

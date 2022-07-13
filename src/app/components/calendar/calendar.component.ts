@@ -31,7 +31,9 @@ export class CalendarComponent implements OnInit {
   public tipoEventos: TipoEvento[] = [];
   public usuarios: Usuario[] = [];
   public options: any;
-  public evento: Evento;    
+  public evento: Evento;
+  public filterUser: number = 1;
+  public filterTipoEvento: number = 0;    
   userSolicitud: Usuario = {name: '', lastName: '', user: '', password: '', email: '', legajo: '', fecha_nac: '', color: '', habilitado: false};
 
   constructor(private eventoService: EventoService, private tipoEventoService: TipoeventoService, private usuarioService: UsuarioService,
@@ -68,7 +70,7 @@ export class CalendarComponent implements OnInit {
 
   getUsuarios(){
     this.usuarioService.getUsuarios().subscribe(data =>{
-      this.usuarios = data;
+      this.usuarios = data;      
     });
   }   
 
@@ -83,6 +85,56 @@ export class CalendarComponent implements OnInit {
 
   onDelete(){
     window.location.reload();
+  }
+
+  searchFilter(idUsuario: number, idTipoEvento: number){
+    console.log(idUsuario + '  ' + idTipoEvento);
+    this.events = [];
+    this.eventoService.getEventosFilter(idUsuario, idTipoEvento).subscribe(data =>{
+      this.events = data;      
+      console.log(this.events);
+    });
+    // if (this.filterUser == 1 && this.filterTipoEvento == 0){  
+    //   this.getEventos();
+    // }
+    // else{
+    //   this.eventoService.getEventosFilter(idUsuario, idTipoEvento).subscribe(data =>{
+    //     this.events = data;      
+    //     console.log(this.events);
+    //   });
+      
+    // }
+  }
+
+  searchUser(event){
+    this.filterUser = event.target.value;
+    console.log(this.filterUser);
+    // if (this.filterUser > 1 && this.filterTipoEvento == 0){      
+    //   this.eventoService.getEventosUser(this.filterUser).subscribe(data =>{
+    //     this.events = data;      
+    //     console.log(this.events);
+    //   });
+    // }
+    // else{
+    //   this.searchFilter(this.filterUser, this.filterTipoEvento);
+    // }
+    this.searchFilter(this.filterUser, this.filterTipoEvento);
+  }
+
+  searchTipoEvento(event){
+    console.log(event);
+    this.filterTipoEvento = event.target.value;
+    console.log(this.filterTipoEvento);
+    // if (this.filterTipoEvento > 0 && this.filterUser == 1){
+    //   this.eventoService.getEventosTipoEvento(this.filterTipoEvento).subscribe(data =>{
+    //     this.events = data;      
+    //     console.log(this.events);
+    //   });
+    // }
+    // else{
+    //   this.searchFilter(this.filterUser, this.filterTipoEvento);
+    // }   
+    this.searchFilter(this.filterUser, this.filterTipoEvento); 
   }
 
   // BUTTONS //
