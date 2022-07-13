@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['../../../styles.css']
 })
 export class HeaderComponent implements OnInit {
-
+  showOption: boolean = false;
   constructor(private route: Router) { }
 
   ngOnInit(): void {
@@ -23,6 +23,16 @@ export class HeaderComponent implements OnInit {
 
   goInicio(){
     this.route.navigate(['/inicio']);
+  }
+
+  handleClick(event) {
+    if (this.showOption) {
+        let clickedComponent = event.target;
+    }
+  }
+
+  toggleOption(){
+    this.showOption = this.showOption === true ? false : true;
   }
 
 }

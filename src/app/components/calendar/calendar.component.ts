@@ -94,30 +94,11 @@ export class CalendarComponent implements OnInit {
       this.events = data;      
       console.log(this.events);
     });
-    // if (this.filterUser == 1 && this.filterTipoEvento == 0){  
-    //   this.getEventos();
-    // }
-    // else{
-    //   this.eventoService.getEventosFilter(idUsuario, idTipoEvento).subscribe(data =>{
-    //     this.events = data;      
-    //     console.log(this.events);
-    //   });
-      
-    // }
   }
 
   searchUser(event){
     this.filterUser = event.target.value;
     console.log(this.filterUser);
-    // if (this.filterUser > 1 && this.filterTipoEvento == 0){      
-    //   this.eventoService.getEventosUser(this.filterUser).subscribe(data =>{
-    //     this.events = data;      
-    //     console.log(this.events);
-    //   });
-    // }
-    // else{
-    //   this.searchFilter(this.filterUser, this.filterTipoEvento);
-    // }
     this.searchFilter(this.filterUser, this.filterTipoEvento);
   }
 
@@ -125,15 +106,6 @@ export class CalendarComponent implements OnInit {
     console.log(event);
     this.filterTipoEvento = event.target.value;
     console.log(this.filterTipoEvento);
-    // if (this.filterTipoEvento > 0 && this.filterUser == 1){
-    //   this.eventoService.getEventosTipoEvento(this.filterTipoEvento).subscribe(data =>{
-    //     this.events = data;      
-    //     console.log(this.events);
-    //   });
-    // }
-    // else{
-    //   this.searchFilter(this.filterUser, this.filterTipoEvento);
-    // }   
     this.searchFilter(this.filterUser, this.filterTipoEvento); 
   }
 
