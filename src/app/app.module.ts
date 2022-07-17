@@ -22,6 +22,10 @@ import { LoginComponent } from './components/login/login.component';
 import { ButtonComponent } from './components/button/button.component';
 import { GuardiasComponent } from './components/guardias/guardias.component';
 import { ExcelService } from './services/excel.service';
+import { PerfilComponent } from './components/perfil/perfil.component';
+import { ClaveComponent } from './components/clave/clave.component';
+import { PerfilesComponent } from './components/perfiles/perfiles.component';
+import { AuditoriaComponent } from './components/auditoria/auditoria.component';
 
 
 @NgModule({
@@ -37,7 +41,11 @@ import { ExcelService } from './services/excel.service';
     UsuarioComponent,
     LoginComponent,
     ButtonComponent,
-    GuardiasComponent    
+    GuardiasComponent,
+    PerfilComponent,
+    ClaveComponent,
+    PerfilesComponent,
+    AuditoriaComponent    
   ],
   imports: [
     BrowserModule,

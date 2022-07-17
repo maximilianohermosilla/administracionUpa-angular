@@ -7,6 +7,7 @@ import { SolicitudesComponent } from './components/solicitudes/solicitudes.compo
 import { InicioComponent } from './components/inicio/inicio.component';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { GuardiasComponent } from './components/guardias/guardias.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 const routes: Routes = [  
   {path: '', component:InicioComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'guardias', component:GuardiasComponent },
   {path: 'solicitudes', component:SolicitudesComponent },
   {path: 'usuarios', component:UsuarioComponent },
+  {path: 'perfil', component:PerfilComponent },
   //{path: 'guardias', component:PortfolioComponent, canActivate: [GuardGuard] },  
   //{ path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];

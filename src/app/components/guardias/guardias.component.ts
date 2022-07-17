@@ -104,6 +104,7 @@ export class GuardiasComponent implements OnInit {
       timeZone: "local",
       locales: [ esLocale ],
       locale: 'es',
+      editable: false,      
       selectable: false,
       droppable: false,
       header: {
@@ -111,13 +112,12 @@ export class GuardiasComponent implements OnInit {
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
       },
-      editable: false,      
       eventTimeFormat: { // like '14:30:00'
         hour: '2-digit',
         minute: '2-digit',
         hour12: false
       },
-
+      /*
       dateClick: (dateClickEvent) =>  {        
         this.dateClick(dateClickEvent);
       },
@@ -132,7 +132,7 @@ export class GuardiasComponent implements OnInit {
         console.log("Event drop !!!", eventClickEvent.event); 
       }, 
       eventDragStop: (eventDragStop) =>  {
-      },  
+      },  */
       events: this.events           
     };
   }  
@@ -155,13 +155,10 @@ export class GuardiasComponent implements OnInit {
   exportAsXLSX():void {    
     let element = document.getElementById('full-calendar');    
     let date = new Date(); 
-       const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
-       /* generate workbook and add the worksheet */
+       var ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
        const wb: XLSX.WorkBook = XLSX.utils.book_new();
-       console.log(date);
        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
        XLSX.writeFile(wb, 'Guardias_'+date.toLocaleString() +'.xlsx');
-    //this.excelService.exportAsExcelFile(wb, 'Guardias');
   }
 
   exportExcel():void{

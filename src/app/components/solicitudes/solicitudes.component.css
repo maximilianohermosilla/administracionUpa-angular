@@ -21,7 +21,7 @@
     min-width: 100%;
   }
 
-  .card:hover {
+  .cards:hover {
     transform: translateY(-0.10rem);
     box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
   }
