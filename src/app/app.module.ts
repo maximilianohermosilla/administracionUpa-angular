@@ -19,6 +19,7 @@ import { SpinnerService } from './services/spinner.service';
 import { SpinnerInterceptorService } from './services/spinner-interceptor.service';
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { LoginComponent } from './components/login/login.component';
+import { ButtonComponent } from './components/button/button.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { LoginComponent } from './components/login/login.component';
     InicioComponent,
     SpinnerComponent,
     UsuarioComponent,
-    LoginComponent    
+    LoginComponent,
+    ButtonComponent    
   ],
   imports: [
     BrowserModule,

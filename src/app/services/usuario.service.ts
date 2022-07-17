@@ -32,4 +32,29 @@ export class UsuarioService {
       })
     )
   }
+
+  insertUsuario(usuario: Usuario): Observable<Usuario>{ 
+    usuario.id=null;  
+    console.log(usuario);
+    const data = {'usuario': usuario};
+    const apiUrlsave = this.api+"/"+usuario.id;
+    //console.log(apiUrlsave);
+    return this.http.post<Usuario>(apiUrlsave, usuario);
+  }
+
+
+  updateUsuario(usuario: Usuario): Observable<Usuario>{
+    const updateUrl = `${this.api}/${usuario.id}`
+    console.log(usuario);
+    return this.http.put<Usuario>(updateUrl, usuario, {responseType: "text" as "json"}).pipe(
+      tap(() => {
+         this.refresh$.next();       
+      })
+    );
+  }  
+
+  deleteUsuario(usuario: Usuario): Observable<Usuario>{
+    const deleteUrl = `${this.api}/${usuario.id}`
+    return this.http.delete<Usuario>(deleteUrl, {responseType: "text" as "json"});
+  }
 }

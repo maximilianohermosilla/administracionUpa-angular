@@ -142,6 +142,15 @@ svg.material-icons:not(:last-child) {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
+.toolbar > .dropdown:hover{
+  opacity: 0.7;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.dropdown-item:hover{
+  opacity: 0.9;
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
 .card-container .card:not(.highlight-card) {
   cursor: pointer;
 }
@@ -313,3 +322,6 @@ svg#clouds {
   }
 }
 
+app-usuario{
+  width: 90%
+}
