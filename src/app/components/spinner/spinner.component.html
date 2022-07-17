@@ -1,0 +1,7 @@
+
+<div class="overlay" *ngIf="blockUI$ | async">
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+</div>
+<div class="overlay text" *ngIf="blockUI$ | async">
+    <div>Cargando...</div>
+</div>

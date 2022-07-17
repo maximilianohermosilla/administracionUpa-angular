@@ -11,6 +11,7 @@ import { Usuario } from 'src/app/models/usuario';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { SpinnerService } from 'src/app/services/spinner.service';
 
 @Component({
   selector: 'app-calendar',
@@ -37,13 +38,13 @@ export class CalendarComponent implements OnInit {
   userSolicitud: Usuario = {name: '', lastName: '', user: '', password: '', email: '', legajo: '', fecha_nac: '', color: '', habilitado: false};
 
   constructor(private eventoService: EventoService, private tipoEventoService: TipoeventoService, private usuarioService: UsuarioService,
-               private formBuilder: FormBuilder, private sant: DomSanitizer) { 
+               private formBuilder: FormBuilder, private sant: DomSanitizer, private spinnerService: SpinnerService) { 
     this.formGroup = this.formBuilder.group({
       userSolicitud: ['', []]
     })
   }
 
-  ngOnInit(): void {   
+  ngOnInit(): void {    
     this.draggableEl1 = document.getElementById('external1');
     this.draggableEl2 = document.getElementById('external2');
     this.setDraggables();
@@ -56,10 +57,12 @@ export class CalendarComponent implements OnInit {
 
   // GETTERS //
 
-  getEventos(){
+  getEventos(){  
+    this.spinnerService.show();   
     this.eventoService.getEventosAll().subscribe(data =>{
       this.events = data;
     });
+    this.spinnerService.hide();
   }
 
   getTipoEvento(){
@@ -88,12 +91,15 @@ export class CalendarComponent implements OnInit {
   }
 
   searchFilter(idUsuario: number, idTipoEvento: number){
+    this.spinnerService.show();
     console.log(idUsuario + '  ' + idTipoEvento);
     this.events = [];
     this.eventoService.getEventosFilter(idUsuario, idTipoEvento).subscribe(data =>{
-      this.events = data;      
+      this.events = data;   
+      this.spinnerService.hide();   
       console.log(this.events);
     });
+    
   }
 
   searchUser(event){
