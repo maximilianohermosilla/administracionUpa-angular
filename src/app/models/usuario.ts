@@ -8,5 +8,7 @@ export interface Usuario{
     legajo: string,
     fecha_nac: string,
     color: string,
-    habilitado: boolean
+    habilitado: boolean,
+    diasFavor: number,
+    diasVacaciones: number
 }

@@ -2,6 +2,11 @@
     <span><h3>Usuarios</h3></span>
   </div>
   <br>
+<button class="btn btn-success"
+        (click)="toggleNewUser()"
+        data-bs-toggle="modal" data-bs-target="#dataModal">Agregar usuario</button>
+<br><br>
+
 <div class="col-12"  >
 
   <table class="table table-hover table-bordered table-dark">
@@ -13,7 +18,9 @@
         <th scope="col">Nombre</th>
         <th scope="col">Apellido</th>
         <th scope="col">Correo</th>
-        <th scope="col">Legajo</th>        
+        <th scope="col">Legajo</th>  
+        <th scope="col">Vacaciones</th> 
+        <th scope="col">Días a favor</th>       
         <th scope="col">Habilitado</th>
         <th scope="col">Editar</th>
       </tr>
@@ -31,6 +38,8 @@
         <td>{{usuario.lastName}}</td>
         <td>{{usuario.email}}</td>
         <td>{{usuario.legajo}}</td>
+        <td>{{usuario.diasVacaciones}}</td>
+        <td>{{usuario.diasFavor}}</td>
         <td><app-button
             icon = "{{usuario.habilitado? 'bi bi-toggle-on': 'bi bi-toggle-off'}}"
             color= "{{usuario.habilitado? 'green': 'red'}}"
@@ -43,8 +52,103 @@
           color= "green"
           type="button"
           (click)="toggleEdit(usuario)"
-          ></app-button></td>  
+          data-bs-toggle="modal" data-bs-target="#dataModal"                                 
+          ></app-button>          
+          <app-button
+          style="margin-left: 10px"
+          icon = "bi bi-trash"
+          color= "red"
+          backColor="white"
+          type="button"
+          (click)="deleteUsuario(usuario)"                         
+          ></app-button></td> 
       </tr>
     </tbody>
   </table>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="dataModal" >
+    
+  <div class="modal-dialog" >
+    <div class="modal-content">
+      <div class="modal-header">            
+          <h5 class="modal-title" id="staticBackdropLabel">{{title}}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+  
+      <div class="modal-body">
+
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(user)">
+          <div class="form-group">
+              <label for="name">Nombre</label>
+              <input class="form-control"
+                  type="text" 
+                  formControlName = "name"
+                  placeholder="Ingrese Nombre" 
+              />
+          </div>
+
+          <div class="form-group">
+            <label for="name">Apellido</label>
+            <input class="form-control"
+                type="text" 
+                formControlName = "lastName"
+                placeholder="Ingrese Apellido" 
+            />
+          </div>
+
+          <div class="form-group">
+              <label for="position">Usuario</label>
+              <input class="form-control"
+                  type="text" 
+                  formControlName="user" 
+                  placeholder="Ingrese Usuario"
+              />
+          </div>
+          <div class="form-group">
+              <label for="ubication">Correo</label>
+              <input class="form-control"
+                  type="text" 
+                  formControlName="email" 
+                  placeholder="Ingrese Correo"
+              />
+          </div>
+
+          <div class="form-group">
+            <label for="ubication">Legajo</label>
+            <input class="form-control"
+                type="text" 
+                formControlName="legajo" 
+                placeholder="Ingrese Legajo"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="ubication">Vacaciones</label>
+            <input class="form-control"
+                type="text" 
+                formControlName="diasVacaciones" 
+                placeholder="Ingrese Vacaciones"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="ubication">Dias a Favor</label>
+            <input class="form-control"
+                type="text" 
+                formControlName="diasFavor" 
+                placeholder="Ingrese Dias a Favor"
+            />
+          </div>
+            
+
+          <div class="modal-footer">
+              <button type="submit" class="btn btn-success" [disabled]="!formGroup.valid" data-bs-dismiss="modal">Guardar</button>
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Salir</button>
+          </div>
+        </form>
+      </div>            
+    </div>
+  </div>
 </div>

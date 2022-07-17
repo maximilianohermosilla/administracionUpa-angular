@@ -35,7 +35,7 @@ export class CalendarComponent implements OnInit {
   public evento: Evento;
   public filterUser: number = 1;
   public filterTipoEvento: number = 0;    
-  userSolicitud: Usuario = {name: '', lastName: '', user: '', password: '', email: '', legajo: '', fecha_nac: '', color: '', habilitado: false};
+  userSolicitud: Usuario = {name: '', lastName: '', user: '', password: '', email: '', legajo: '', fecha_nac: '', color: '', habilitado: true, diasFavor: 0, diasVacaciones: 0};
 
   constructor(private eventoService: EventoService, private tipoEventoService: TipoeventoService, private usuarioService: UsuarioService,
                private formBuilder: FormBuilder, private sant: DomSanitizer, private spinnerService: SpinnerService) { 

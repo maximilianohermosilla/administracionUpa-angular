@@ -37,7 +37,7 @@ export class UsuarioService {
     usuario.id=null;  
     console.log(usuario);
     const data = {'usuario': usuario};
-    const apiUrlsave = this.api+"/"+usuario.id;
+    const apiUrlsave = this.api+"/save";
     //console.log(apiUrlsave);
     return this.http.post<Usuario>(apiUrlsave, usuario);
   }

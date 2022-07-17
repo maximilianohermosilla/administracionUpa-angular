@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from 'src/app/models/usuario';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -12,10 +13,26 @@ import { ButtonComponent } from '../button/button.component';
 export class UsuarioComponent implements OnInit {
   @Output() btnToggleEnabled = new EventEmitter();
   @Output() btnToggleEdit = new EventEmitter();
+  formGroup: FormGroup;
   public usuarios: any[] = [];
-  user: Usuario = {name: '', lastName: '', user: '', password: '', email: '', legajo: '', fecha_nac: '', color: '', habilitado: true};
+  title = '';
+  newUser: boolean = true;
 
-  constructor(private usuarioService: UsuarioService, private spinnerService: SpinnerService) {  }
+  user: Usuario = {name: '', lastName: '', user: '', password: '', email: '', legajo: '', fecha_nac: '', color: '', habilitado: true, diasFavor: 0, diasVacaciones: 0};
+
+  constructor(private usuarioService: UsuarioService, private spinnerService: SpinnerService, private formBuilder: FormBuilder) {
+    this.formGroup = this.formBuilder.group({
+      name : ['',[Validators.required]],
+      lastName : ['',[]],
+      user : ['',[Validators.required]],
+      email : ['',[]],
+      legajo : ['',[]],
+      habilitado : ['',[]],
+      color : ['',[]],
+      diasFavor : ['',[]],
+      diasVacaciones : ['',[]]
+    })  
+  }
 
   ngOnInit(): void {
     this.getUsuarios();
@@ -31,28 +48,77 @@ export class UsuarioComponent implements OnInit {
   }
 
   insertUsuario(usuario: Usuario){
-
+    this.user.id=null;
+    this.usuarioService.insertUsuario(usuario).subscribe((element)=>(
+      this.ngOnInit()
+    ));
   }
 
   updateUsuario(usuario: Usuario){
-    this.usuarioService.updateUsuario(this.user).subscribe((element)=>(
+    this.usuarioService.updateUsuario(usuario).subscribe((element)=>(
       this.ngOnInit()
     ));
   }
 
   deleteUsuario(usuario: Usuario){
-
+    console.log(usuario);
   }
 
-  toggleEnabled(usuario){
+  toggleEnabled(usuario){    
     this.user = usuario;
     this.user.habilitado = !this.user.habilitado;
     console.log(this.user);
     this.updateUsuario(this.user);
   }
 
-  toggleEdit(evento){
-    console.log(evento);
+  toggleEdit(usuario){
+    this.newUser = false;
+    this.user = usuario;
+    this.formGroup.controls['name'].setValue(this.user.name);
+    this.formGroup.controls['lastName'].setValue(this.user.lastName);
+    this.formGroup.controls['user'].setValue(this.user.user);
+    this.formGroup.controls['email'].setValue(this.user.email);
+    this.formGroup.controls['legajo'].setValue(this.user.legajo);
+    this.formGroup.controls['color'].setValue(this.user.color);
+    this.formGroup.controls['diasFavor'].setValue(this.user.diasFavor);
+    this.formGroup.controls['diasVacaciones'].setValue(this.user.diasVacaciones);
+    this.title="Editar Usuario: " + this.user.name +  " " + this.user.lastName ;
+    console.log(usuario);
+  }
+
+  toggleNewUser(){
+    this.newUser = true;
+    this.user = {name: '', lastName: '', user: '', password: '', email: '', legajo: '', fecha_nac: '', color: '', habilitado: true, diasFavor: 0, diasVacaciones: 0};    
+    this.formGroup.controls['name'].setValue('');
+    this.formGroup.controls['lastName'].setValue('');
+    this.formGroup.controls['user'].setValue('');
+    this.formGroup.controls['email'].setValue('');
+    this.formGroup.controls['legajo'].setValue('');
+    this.formGroup.controls['color'].setValue('');
+    this.formGroup.controls['diasFavor'].setValue('');
+    this.formGroup.controls['diasVacaciones'].setValue('');
+    this.title="Ingresar nuevo usuario";
+  }
+
+  onSubmit(usuario: Usuario){
+    usuario = {
+      id: this.user.id,
+      name : this.formGroup.value.name,
+      lastName : this.formGroup.value.lastName,
+      user : this.formGroup.value.user,
+      password: this.user.password,
+      fecha_nac: this.user.fecha_nac,
+      email : this.formGroup.value.email,
+      legajo : this.formGroup.value.legajo,
+      habilitado : this.user.habilitado,
+      color : this.formGroup.value.color,
+      diasFavor : this.formGroup.value.diasFavor,
+      diasVacaciones : this.formGroup.value.diasVacaciones,
+    }
+    console.log(usuario);
+    this.user=usuario;
+    this.newUser ? this.insertUsuario(usuario): this.updateUsuario(usuario);
+    //this.ngOnInit();    
   }
 
 }
