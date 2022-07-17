@@ -17,12 +17,19 @@
     background: linear-gradient(#004993,#008bf6);;
     border-color: #232a30;
     color: #FFFFFF;
-    width: 100%;
-    min-width: 100%;
     padding-left: 50px;
     padding-right: 50px;
   }
 
   .title {
       height: 48px;
+  }
+
+  .content-inicio{
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    background-image: '\assets\upa-10.jpg';
+    width: 100%;
+    opacity: 0.7;
   }

@@ -1,0 +1,48 @@
+<div class="card title">
+    <span><h3>Guardias</h3></span>
+</div>
+
+<div class="flex-container">
+    
+<div class="">
+    <p style="margin-bottom:0px">Filtro:</p>
+    <select name="cbTipo" id="cbTipo" style="width: 100%" (change)="searchTipoEvento($event)">
+        <option value=0>Todos</option>
+        <option *ngFor="let tipo of tipoEventos" value={{tipo.id}}                 
+        >
+            {{tipo.descripcion}}
+        </option>
+    </select>
+</div>
+
+<!-- FILTRO EMPLEADOS -->
+<div class="">
+    <p style="margin-bottom:0px">Empleados:</p>
+    <select name="cbUsuarios" id="cbUsuarios" style="width: 100%" (change)="searchUser($event)">
+        <option *ngFor="let usuario of usuarios" value={{usuario.id}}                   
+        >
+            {{usuario.id == 1 ? ' Todos ': usuario.name + ' ' +usuario.lastName}}
+        </option>
+    </select>
+
+</div>  
+<div>
+    <button class="btn btn-success" (click)="exportAsXLSX()"><i class="bi bi-filetype-xls" style="font-size: 16px"></i>Exportar</button>
+</div>
+</div>
+<br>
+
+<!-- COMPONENTE FULL-CALENDAR -->
+
+<div class="col-md-12 col-sm-12" style="overflow: scroll">
+    <p-fullCalendar id="full-calendar" #calendar [options]="options" [events]="events"
+    [events]="events"
+    (dateClick)="dateClick($event)"
+    (eventClick)="eventClick($event)"
+    ></p-fullCalendar>
+</div>
+        
+   
+ 
+
+

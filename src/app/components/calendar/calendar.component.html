@@ -1,5 +1,5 @@
 <div class="card title">
-    <span><h3>Guardias</h3></span>
+    <span><h3>Administración Guardias</h3></span>
 </div>
 
 <div class="calendar">
@@ -27,13 +27,17 @@
         <!-- ------------------- -->
 
         <div class="col-md-8 col-sm-12" style="">
-            <p-fullCalendar #calendar [options]="options" [events]="events"
+            <p-fullCalendar id ="full-calendar" #calendar [options]="options" [events]="events"
             [events]="events"
             (dateClick)="dateClick($event)"
             (eventClick)="eventClick($event)"
             (eventDragStop)="eventDragStop($event)"
             (eventDrop)="eventDrop($event)"
             ></p-fullCalendar>
+            <br>
+            <div class="export-button">
+                <button class="btn btn-success" (click)="exportAsXLSX()"><i class="bi bi-filetype-xls" style="font-size:16px"></i>Exportar</button>
+            </div>
         </div>
         
         <!-- ------------------- -->
@@ -76,7 +80,7 @@
 
             <br>
             <button class="btn btn-lg btn-success float-start" style="width: 100%; margin-bottom: 10px" (click)="saveEvents()"><i class="bi bi-calendar-check"></i>Guardar</button>            
-            <button class="btn btn-lg btn-danger float-end" style="width: 100%" (click)="cleanEvents()" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash3"></i>Limpiar</button>
+            <button class="btn btn-lg btn-danger float-end" style="width: 100%" (click)="cleanEvents()" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="bi bi-trash3"></i>Limpiar</button>            
         </div>
 
 
@@ -86,7 +90,6 @@
                     <div class="modal-content">
                         <div class="modal-header">            
                             <h5 class="modal-title" id="staticBackdropLabel">Seleccione empleado</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                     
                         <div class="modal-body">
@@ -104,7 +107,6 @@
 
                             <div class="modal-footer">
                                 <button type="click" class="btn btn-success" data-bs-dismiss="modal" (click)="onSubmit(userSolicitud)">Guardar</button>
-                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Salir</button>
                             </div>
                         </form>    
                     </div>        
@@ -145,7 +147,42 @@
                     </form>    
                 </div>        
             </div>
-        </div>        
+        </div>
+        
+        <div class="modal" id="saveModal" [ngStyle]="{'display': viewSaveModal ? 'block' : 'none', 'opacity': 1}">      
+    
+            <div class="modal-dialog" >
+                <div class="modal-content">
+                    <div class="modal-header">            
+                        <h5 class="modal-title">¿Está seguro/a de guardar los cambios?</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                
+                    <div class="modal-body">
+                    <form [formGroup]="formGroup">
+                        <div class="form-group">
+                            <h5>Eventos nuevos: </h5>
+                            <li *ngFor="let eventoTemp of eventsTemp" style="list-style-type: none;">
+                                <div >{{eventoTemp.id}} - {{eventoTemp.title}} - {{eventoTemp.start}}</div>
+                            </li>
+                            <h5>Eventos actualizados: </h5>
+                            <li *ngFor="let eventosUpdate of eventsUpdate" style="list-style-type: none;">
+                                <div >{{eventosUpdate.id}} - {{eventosUpdate.title}} - {{eventosUpdate.start}}</div>
+                            </li>
+                            <h5>Eventos eliminados: </h5>
+                            <li *ngFor="let eventosDelete of eventsDelete" style="list-style-type: none;">
+                                <div >{{eventosDelete.id}} - {{eventosDelete.title}} - {{eventosDelete.start}}</div>
+                            </li>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="click" class="btn btn-success" data-bs-dismiss="modal" (click)="saveEvents()">Confirmar</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Salir</button>
+                        </div>
+                    </form>    
+                </div>        
+            </div>
+        </div>       
     </div>
 
     </div>

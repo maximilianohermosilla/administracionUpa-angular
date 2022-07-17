@@ -137,3 +137,8 @@ i{
     justify-content: center;
     margin-top: 10px;
   }
+
+  .export-button{
+    display:flex;
+    justify-content: center;
+  }

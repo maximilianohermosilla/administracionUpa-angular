@@ -17,6 +17,10 @@ export class HeaderComponent implements OnInit {
     this.route.navigate(['/solicitudes']);
   }
 
+  goAdministracionGuardias(){
+    this.route.navigate(['/guardias/administracion']);
+  }
+
   goGuardias(){
     this.route.navigate(['/guardias']);
   }

@@ -1,3 +1,4 @@
+import * as XLSX from 'xlsx';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -24,6 +25,7 @@ export class CalendarComponent implements OnInit {
   draggableEl1;
   draggableEl2;
   viewModal: boolean = false;
+  viewSaveModal: boolean = false;
   viewDeleteModal: boolean = false;
   public events: any[] = [];
   public eventsTemp: Evento[] = [];  
@@ -128,31 +130,34 @@ export class CalendarComponent implements OnInit {
     if(this.eventsTemp.length > 0){
       this.eventsTemp.forEach(element => {
         this.eventoService.insertEvento(element).subscribe((element)=>(
-          this.setOptions(),
-          this.ngOnInit()
+          this.getEventos()
         ))
       });
     }
     if(this.eventsUpdate.length > 0){
       this.eventsUpdate.forEach(elementUpdate => {
         this.eventoService.updateEvento(elementUpdate).subscribe((element)=>(
-          this.ngOnInit()
+          this.getEventos()
         ))
       });
     }
     if(this.eventsDelete.length > 0){
       this.eventsDelete.forEach(elementDelete => {
         this.eventoService.deleteEvento(elementDelete).subscribe((element)=>(
-          this.ngOnInit()
+          this.getEventos()
         ))
       });
     }
+    
+    this.events=[];
     this.eventsTemp=[];
     this.eventsUpdate=[];
     this.eventsDelete=[];
     this.events.splice(0);
-    this.getEventos();
-    this.ngOnInit();
+    setTimeout(() => {
+      this.getEventos()     
+    }, 5000);
+    //this.ngOnInit();
   }
 
   // NEWS DRAGGABLES //
@@ -517,4 +522,15 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  exportAsXLSX():void {    
+    let element = document.getElementById('full-calendar');    
+    let date = new Date(); 
+       const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+       /* generate workbook and add the worksheet */
+       const wb: XLSX.WorkBook = XLSX.utils.book_new();
+       console.log(date);
+       XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+       XLSX.writeFile(wb, 'Guardias_'+date.toLocaleString() +'.xlsx');
+    //this.excelService.exportAsExcelFile(wb, 'Guardias');
+  }
 }

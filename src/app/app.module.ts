@@ -20,6 +20,9 @@ import { SpinnerInterceptorService } from './services/spinner-interceptor.servic
 import { UsuarioComponent } from './components/usuario/usuario.component';
 import { LoginComponent } from './components/login/login.component';
 import { ButtonComponent } from './components/button/button.component';
+import { GuardiasComponent } from './components/guardias/guardias.component';
+import { ExcelService } from './services/excel.service';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import { ButtonComponent } from './components/button/button.component';
     SpinnerComponent,
     UsuarioComponent,
     LoginComponent,
-    ButtonComponent    
+    ButtonComponent,
+    GuardiasComponent    
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,7 @@ import { ButtonComponent } from './components/button/button.component';
     ReactiveFormsModule,
     NgbModule
   ],
-  providers: [EventoService,
+  providers: [EventoService, ExcelService,
     { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]
