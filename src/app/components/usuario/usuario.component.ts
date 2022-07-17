@@ -18,7 +18,7 @@ export class UsuarioComponent implements OnInit {
   title = '';
   newUser: boolean = true;
 
-  user: Usuario = {name: '', lastName: '', user: '', password: '', email: '', legajo: '', fecha_nac: '', color: '', habilitado: true, diasFavor: 0, diasVacaciones: 0};
+  user: Usuario = {name: '', lastName: '', user: '', password: '', email: '', legajo: '', fechaNac: '', color: '', habilitado: true, diasFavor: 0, diasVacaciones: 0, horasFavor: 0};
 
   constructor(private usuarioService: UsuarioService, private spinnerService: SpinnerService, private formBuilder: FormBuilder) {
     this.formGroup = this.formBuilder.group({
@@ -88,7 +88,7 @@ export class UsuarioComponent implements OnInit {
 
   toggleNewUser(){
     this.newUser = true;
-    this.user = {name: '', lastName: '', user: '', password: '', email: '', legajo: '', fecha_nac: '', color: '', habilitado: true, diasFavor: 0, diasVacaciones: 0};    
+    this.user = {name: '', lastName: '', user: '', password: '', email: '', legajo: '', fechaNac: '', color: '', habilitado: true, diasFavor: 0, diasVacaciones: 0, horasFavor: 0};    
     this.formGroup.controls['name'].setValue('');
     this.formGroup.controls['lastName'].setValue('');
     this.formGroup.controls['user'].setValue('');
@@ -107,13 +107,14 @@ export class UsuarioComponent implements OnInit {
       lastName : this.formGroup.value.lastName,
       user : this.formGroup.value.user,
       password: this.user.password,
-      fecha_nac: this.user.fecha_nac,
+      fechaNac: this.user.fechaNac,
       email : this.formGroup.value.email,
       legajo : this.formGroup.value.legajo,
       habilitado : this.user.habilitado,
       color : this.formGroup.value.color,
       diasFavor : this.formGroup.value.diasFavor,
       diasVacaciones : this.formGroup.value.diasVacaciones,
+      horasFavor: this.user.horasFavor
     }
     console.log(usuario);
     this.user=usuario;

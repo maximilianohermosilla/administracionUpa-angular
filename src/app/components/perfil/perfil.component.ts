@@ -11,7 +11,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 })
 export class PerfilComponent implements OnInit {
   formGroup: FormGroup;
-  user: Usuario = {name: '', lastName: '', user: '', password: '', email: '', legajo: '', fecha_nac: '', color: '', habilitado: true, diasFavor: 0, diasVacaciones: 0};
+  user: Usuario = {id: 0, name: '', lastName: '', user: '', password: '', email: '', legajo: '', fechaNac: '', color: '', habilitado: true, diasFavor: 0, diasVacaciones: 0, horasFavor: 0};
 
   constructor(private usuarioService: UsuarioService, private spinnerService: SpinnerService, private formBuilder: FormBuilder) {
     this.formGroup = this.formBuilder.group({
@@ -28,6 +28,25 @@ export class PerfilComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.spinnerService.show();   
+    this.usuarioService.findUsuario(1).subscribe(data =>{
+      this.user = data;
+      this.setPerfil();
+    });
+    this.setPerfil();
+    this.spinnerService.hide();
+  }
+
+  setPerfil(){        
+    this.formGroup.controls['name'].setValue(this.user.name);
+    this.formGroup.controls['lastName'].setValue(this.user.lastName);
+    this.formGroup.controls['user'].setValue(this.user.user);
+    this.formGroup.controls['email'].setValue(this.user.email);
+    this.formGroup.controls['legajo'].setValue(this.user.legajo);
+    this.formGroup.controls['color'].setValue(this.user.color);
+    this.formGroup.controls['diasFavor'].setValue(this.user.diasFavor);
+    this.formGroup.controls['diasVacaciones'].setValue(this.user.diasVacaciones);
+    //this.title="Editar Usuario: " + this.user.name +  " " + this.user.lastName ;
   }
 
   onSubmit(user: Usuario){

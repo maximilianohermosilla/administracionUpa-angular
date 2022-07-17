@@ -33,6 +33,14 @@ export class UsuarioService {
     )
   }
 
+  findUsuario(idUsuario: number){
+    return this.http.get<Usuario>(this.api+"/"+idUsuario).pipe(
+      tap(() => {
+         this._refresh$.next();       
+      })
+    )
+  }
+
   insertUsuario(usuario: Usuario): Observable<Usuario>{ 
     usuario.id=null;  
     console.log(usuario);

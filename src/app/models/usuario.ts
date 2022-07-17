@@ -6,9 +6,10 @@ export interface Usuario{
     password: string,
     email: string,
     legajo: string,
-    fecha_nac: string,
+    fechaNac: string,
     color: string,
     habilitado: boolean,
     diasFavor: number,
-    diasVacaciones: number
+    diasVacaciones: number,
+    horasFavor: number,
 }
