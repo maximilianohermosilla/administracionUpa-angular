@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from 'src/app/models/usuario';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
 
 @Component({
   selector: 'app-perfil',
@@ -12,8 +13,10 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 export class PerfilComponent implements OnInit {
   formGroup: FormGroup;
   user: Usuario = {id: 0, name: '', lastName: '', user: '', password: '', email: '', legajo: '', fechaNac: '', color: '', habilitado: true, diasFavor: 0, diasVacaciones: 0, horasFavor: 0};
+  photo: string;
+  imageUrl: string;
 
-  constructor(private usuarioService: UsuarioService, private spinnerService: SpinnerService, private formBuilder: FormBuilder) {
+  constructor(private usuarioService: UsuarioService, private spinnerService: SpinnerService, private formBuilder: FormBuilder, private domSanitizer: DomSanitizer) {
     this.formGroup = this.formBuilder.group({
       name : ['',[Validators.required]],
       lastName : ['',[]],
@@ -33,9 +36,19 @@ export class PerfilComponent implements OnInit {
       this.user = data;
       this.setPerfil();
     });
-    this.setPerfil();
+    this.usuarioService.getProfilePhoto(1).subscribe(data =>{     
+      this.photo = data;      
+    });
+    console.log(this.photo);
+    this.imageUrl= this.domSanitizer.bypassSecurityTrustResourceUrl(this.photo) as string;
+    console.log(this.imageUrl);
+    this.transform(this.imageUrl);
     this.spinnerService.hide();
   }
+
+  transform (value: string): SafeHtml {
+    return this.domSanitizer.bypassSecurityTrustHtml(value);
+}
 
   setPerfil(){        
     this.formGroup.controls['name'].setValue(this.user.name);

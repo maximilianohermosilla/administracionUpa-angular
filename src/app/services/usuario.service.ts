@@ -18,6 +18,8 @@ export class UsuarioService {
   private _refresh$ = new Subject<void>();
   
   private api = 'http://localhost:8080/usuario'
+  private apiFile = 'http://localhost:8080/fileUsuario/'
+  private apiFileData = 'http://localhost:8080/fileUser/'
 
   constructor(private http:HttpClient) { }
 
@@ -39,6 +41,22 @@ export class UsuarioService {
          this._refresh$.next();       
       })
     )
+  }
+
+  getProfilePhoto(idUsuario: number): Observable<any>{
+    return this.http.get(this.apiFile+idUsuario, {responseType: "text"}).pipe(      
+      tap(() => {
+         this._refresh$.next();       
+      })
+    );
+  }
+
+  getImage(idUsuario: number): Observable<any>{
+    return this.http.get(this.apiFileData+idUsuario, {responseType: "text"}).pipe(      
+      tap(() => {
+         this._refresh$.next();       
+      })
+    );
   }
 
   insertUsuario(usuario: Usuario): Observable<Usuario>{ 
