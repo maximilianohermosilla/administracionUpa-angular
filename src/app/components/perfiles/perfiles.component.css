@@ -1,0 +1,32 @@
+.content{
+    display: block;
+    width: 100%;
+}
+
+.card {
+    all: unset;
+    height: 2em;
+    border-radius: 4px;
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    line-height: 24px;
+    margin:1px;
+    background: linear-gradient(#004993,#008bf6);;
+    border-color: #232a30;
+    color: #FFFFFF;
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .cards:hover {
+    transform: translateY(-0.10rem);
+    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .title {
+      height: 48px;
+  }

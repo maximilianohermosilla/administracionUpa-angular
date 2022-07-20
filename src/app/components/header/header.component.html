@@ -24,8 +24,7 @@
       </button>
         <ul ngbDropdownMenu aria-labelledby="dropdownMenuAdministracion" class="dropdownList">
           <li><a class="dropdown-item" ngbDropdownItem href="/usuarios">Usuarios</a></li>
-          <li><a class="dropdown-item" ngbDropdownItem href="#">Perfiles</a></li>
-          <li><a class="dropdown-item" ngbDropdownItem href="#">Permisos</a></li>
+          <li><a class="dropdown-item" ngbDropdownItem href="/perfiles">Perfiles</a></li>
           <li><a class="dropdown-item" ngbDropdownItem href="#">Permisos por perfil</a></li>
         </ul>
       </div>
@@ -38,8 +37,8 @@
           <span class="d-none d-md-block">Consultas</span>
       </button>
         <ul ngbDropdownMenu aria-labelledby="dropdownMenuConsulta"  class="dropdownList">
-          <li><a ngbDropdownItem href="#">Auditoría</a></li>
-          <li><a ngbDropdownItem href="#">Inasistencias</a></li>
+          <li><a ngbDropdownItem href="/auditoria">Auditoría</a></li>
+          <li><a ngbDropdownItem href="/inasistencias">Inasistencias</a></li>
         </ul>
       </div>
 
@@ -52,8 +51,8 @@
           <span class="d-none d-md-block">Solicitudes</span>
       </button>
         <ul ngbDropdownMenu aria-labelledby="dropdownMenuSolicitudes"  class="dropdownList">
-          <li><a ngbDropdownItem href="/solicitudes">Nueva solicitud</a><i (click)="goSolicitudes()" ></i> </li>
-          <li><a ngbDropdownItem href="#">Solicitudes</a></li>
+          <li><a ngbDropdownItem href="/solicitud">Nueva solicitud</a><i (click)="goSolicitudes()" ></i> </li>
+          <li><a ngbDropdownItem href="/solicitudes">Solicitudes</a></li>
         </ul>
       </div>      
   
@@ -83,7 +82,7 @@
         </button>
           <ul ngbDropdownMenu aria-labelledby="dropdownMenuLogin"  class="dropdownList">
             <li><a ngbDropdownItem href="/perfil">Mi perfil</a></li>
-            <li><a ngbDropdownItem href="#">Cambiar clave</a></li>
+            <li><a ngbDropdownItem href="/clave">Cambiar clave</a></li>
             <li><a ngbDropdownItem href="#">Cerrar sesión</a></li>
           </ul>
         </div>   

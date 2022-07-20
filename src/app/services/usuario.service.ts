@@ -17,9 +17,13 @@ export class UsuarioService {
 
   private _refresh$ = new Subject<void>();
   
-  private api = 'http://localhost:8080/usuario'
-  private apiFile = 'http://localhost:8080/fileUsuario/'
-  private apiFileData = 'http://localhost:8080/fileUser/'
+  private api = 'https://administracion-upa-10.herokuapp.com/usuario'
+  private apiFile = 'https://administracion-upa-10.herokuapp.com/fileUsuario/'
+  private apiFileData = 'https://administracion-upa-10.herokuapp.com/fileUser/'
+
+  //private api = 'http://localhost:8080/usuario'
+  //private apiFile = 'http://localhost:8080/fileUsuario/'
+  //private apiFileData = 'http://localhost:8080/fileUser/'
 
   constructor(private http:HttpClient) { }
 

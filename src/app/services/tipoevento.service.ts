@@ -16,7 +16,8 @@ export class TipoeventoService {
 
   private _refresh$ = new Subject<void>();
   
-  private api = 'http://localhost:8080/tipoevento'
+  private api = 'https://administracion-upa-10.herokuapp.com/tipoevento'
+  //private api = 'http://localhost:8080/tipoevento'
 
   constructor(private http:HttpClient) { }
 

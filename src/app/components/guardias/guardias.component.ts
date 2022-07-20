@@ -53,8 +53,8 @@ export class GuardiasComponent implements OnInit {
     this.spinnerService.show();   
     this.eventoService.getEventosAll().subscribe(data =>{
       this.events = data;
+      //this.spinnerService.hide();
     });
-    this.spinnerService.hide();
   }
 
   getTipoEvento(){
@@ -75,7 +75,7 @@ export class GuardiasComponent implements OnInit {
     this.events = [];
     this.eventoService.getEventosFilter(idUsuario, idTipoEvento).subscribe(data =>{
       this.events = data;   
-      this.spinnerService.hide();   
+      //this.spinnerService.hide();   
       console.log(this.events);
     });
     
@@ -97,6 +97,7 @@ export class GuardiasComponent implements OnInit {
   // OPTIONS EVENTS //
 
   setOptions(){
+    this.spinnerService.show();
     this.options = {
       height: 600,
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
@@ -135,6 +136,7 @@ export class GuardiasComponent implements OnInit {
       },  */
       events: this.events           
     };
+    //this.spinnerService.hide();
   }  
 
 

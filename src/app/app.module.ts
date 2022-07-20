@@ -26,6 +26,8 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { ClaveComponent } from './components/clave/clave.component';
 import { PerfilesComponent } from './components/perfiles/perfiles.component';
 import { AuditoriaComponent } from './components/auditoria/auditoria.component';
+import { SolicitudComponent } from './components/solicitud/solicitud.component';
+import { InasistenciasComponent } from './components/inasistencias/inasistencias.component';
 
 
 @NgModule({
@@ -45,7 +47,9 @@ import { AuditoriaComponent } from './components/auditoria/auditoria.component';
     PerfilComponent,
     ClaveComponent,
     PerfilesComponent,
-    AuditoriaComponent    
+    AuditoriaComponent,
+    SolicitudComponent,
+    InasistenciasComponent    
   ],
   imports: [
     BrowserModule,

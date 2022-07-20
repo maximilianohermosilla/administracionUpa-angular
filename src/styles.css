@@ -1,4 +1,34 @@
 @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css");
+
+app-usuario{
+  width: 98%
+}
+app-inicio{
+  width: 98%
+}
+app-perfil{
+  width: 95%
+}
+app-solicitudes{
+  width: 98%
+}
+app-solicitud{
+  width: 95%
+}
+app-auditoria{
+  width: 98%
+}
+app-login{
+  width: 98%
+}
+app-perfiles{
+  width: 98%
+}
+app-inasistencias{
+  width: 98%
+}
+
+
 .modal{
   width: 100%;
 }
@@ -322,14 +352,3 @@ svg#clouds {
   }
 }
 
-app-usuario{
-  width: 98%
-}
-
-app-inicio{
-  width: 98%
-}
-
-app-perfil{
-  width: 95%
-}

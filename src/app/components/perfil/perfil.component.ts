@@ -15,6 +15,7 @@ export class PerfilComponent implements OnInit {
   user: Usuario = {id: 0, name: '', lastName: '', user: '', password: '', email: '', legajo: '', fechaNac: '', color: '', habilitado: true, diasFavor: 0, diasVacaciones: 0, horasFavor: 0};
   photo: string;
   imageUrl: string;
+  isAdmin=false;
 
   constructor(private usuarioService: UsuarioService, private spinnerService: SpinnerService, private formBuilder: FormBuilder, private domSanitizer: DomSanitizer) {
     this.formGroup = this.formBuilder.group({
@@ -43,12 +44,22 @@ export class PerfilComponent implements OnInit {
     this.imageUrl= this.domSanitizer.bypassSecurityTrustResourceUrl(this.photo) as string;
     console.log(this.imageUrl);
     this.transform(this.imageUrl);
-    this.spinnerService.hide();
+    this.youAreAdmin();
+    this.spinnerService.hide();    
   }
 
   transform (value: string): SafeHtml {
     return this.domSanitizer.bypassSecurityTrustHtml(value);
-}
+  }
+
+  youAreAdmin(){
+    if(!this.isAdmin){
+      this.formGroup.controls['user'].disable();
+      this.formGroup.controls['diasFavor'].disable();
+      this.formGroup.controls['diasVacaciones'].disable();
+    }
+    return this.isAdmin;
+  }
 
   setPerfil(){        
     this.formGroup.controls['name'].setValue(this.user.name);

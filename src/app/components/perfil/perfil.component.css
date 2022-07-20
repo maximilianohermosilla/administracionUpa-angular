@@ -34,3 +34,7 @@ img:hover{
 form{
     width: 100%;
 }
+
+.disabled{
+    background-color: rgb(215, 215, 215);    
+}

@@ -1,1 +1,18 @@
-<p>clave works!</p>
+<div class="card title">
+    <span><h3>Cambio de clave</h3></span>
+</div>
+
+<div class="content" style="min-width: 600px">
+    <div class="row">
+        <div class="col-12 center">
+            <p class="center">Presione el botón para restablecer su contraseña</p>
+            <br>
+            <button class="btn btn-success"
+                (click)="sendMail()"
+                data-bs-toggle="modal" data-bs-target="#dataModal">Reestablecer contraseña</button>
+
+        </div>
+        <br>
+        <p  class="center" *ngIf="checkEmail">Revise su correo electrónico</p>
+    </div>
+</div>
