@@ -28,7 +28,9 @@ import { PerfilesComponent } from './components/perfiles/perfiles.component';
 import { AuditoriaComponent } from './components/auditoria/auditoria.component';
 import { SolicitudComponent } from './components/solicitud/solicitud.component';
 import { InasistenciasComponent } from './components/inasistencias/inasistencias.component';
-
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ConfirmationService } from 'primeng/api';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -59,9 +61,11 @@ import { InasistenciasComponent } from './components/inasistencias/inasistencias
     RoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    ConfirmDialogModule,
+    BrowserAnimationsModule,
     NgbModule
   ],
-  providers: [EventoService, ExcelService,
+  providers: [EventoService, ExcelService, ConfirmationService ,
     { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]

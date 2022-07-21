@@ -9,10 +9,37 @@
             <br>
             <button class="btn btn-success"
                 (click)="sendMail()"
-                data-bs-toggle="modal" data-bs-target="#dataModal">Reestablecer contraseña</button>
-
+                >Reestablecer contraseña</button>
+                <br><br>
+                <p-button (click)="confirm()" icon="pi pi-check" label="Confirm"></p-button>                
         </div>
-        <br>
+        <br><br>
+        <!-- <p-confirmDialog [style]="{ width: '50vw' }" [baseZIndex]="10000"></p-confirmDialog> -->
+        <p-confirmDialog [style]="{ width: '50vw' }" [baseZIndex]="10000">
+            <p-footer>
+              <button
+                type="button"
+                pButton
+                label="Update Old Value"
+                value="Update"
+                class="p-button-tertiary"
+                (click)="updateValueIndex()"
+              ></button>
+              <button
+                type="button"
+                pButton
+                label="cancel"
+                class="p-button-secondary"
+                (click)="CancelToAdd()"
+              ></button>
+              <button
+                type="button"
+                pButton
+                label="Create Duplicate"
+                (click)="AddDuplicate()"
+              ></button>
+            </p-footer>
+          </p-confirmDialog>
         <p  class="center" *ngIf="checkEmail">Revise su correo electrónico</p>
     </div>
 </div>

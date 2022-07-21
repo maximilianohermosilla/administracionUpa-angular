@@ -7,22 +7,23 @@
         data-bs-toggle="modal" data-bs-target="#dataModal">Agregar usuario</button>
 <br><br>
 
-<div class="col-12"  >
+<div class="table-responsive"  >
 
-  <table class="table table-hover table-bordered table-dark">
+  <table class="table table-hover table-bordered table-dark table-fixed">
     <thead>
       <tr>
-        <th scope="col"></th>
-        <th scope="col">Código</th>
-        <th scope="col">Usuario</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
-        <th scope="col">Correo</th>
-        <th scope="col">Legajo</th>  
-        <th scope="col">Vacaciones</th> 
-        <th scope="col">Días a favor</th>       
-        <th scope="col">Habilitado</th>
-        <th scope="col">Editar</th>
+        <th class="th-sm" scope="col"></th>
+        <th class="th-sm" scope="col">Código</th>
+        <th class="th-sm" scope="col">Usuario</th>
+        <th class="th-sm" scope="col">Nombre</th>
+        <th class="th-sm" scope="col">Apellido</th>
+        <th class="th-sm" scope="col">Correo</th>
+        <th class="th-sm" scope="col">Legajo</th>  
+        <th class="th-sm" scope="col">Vacaciones</th> 
+        <th class="th-sm" scope="col">Días a favor</th>       
+        <th class="th-sm" scope="col">Habilitado</th>
+        <th class="th-sm" scope="col">Editar</th>
+        <th class="th-sm" scope="col">Eliminar</th>
       </tr>
     </thead>
     <tbody *ngFor="let usuario of usuarios" >
@@ -47,14 +48,14 @@
             type="button"
             (click)="toggleEnabled(usuario)"
             ></app-button></td>           
-        <td><app-button
+          <td><app-button
           icon = "bi bi-pencil-square"
           color= "green"
           type="button"
           (click)="toggleEdit(usuario)"
           data-bs-toggle="modal" data-bs-target="#dataModal"                                 
-          ></app-button>          
-          <app-button
+          ></app-button></td>           
+          <td><app-button
           style="margin-left: 10px"
           icon = "bi bi-trash"
           color= "red"          

@@ -17,12 +17,13 @@
     background: linear-gradient(#004993,#008bf6);;
     border-color: #232a30;
     color: #FFFFFF;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-bottom: 50px;
   }
 
   .title {
-      height: 48px;
+      height: auto;
   }
 
   .content-inicio{
