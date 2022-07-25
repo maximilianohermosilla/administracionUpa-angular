@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ConfirmationService } from 'primeng/api';
 import { Usuario } from 'src/app/models/usuario';
 import { SpinnerService } from 'src/app/services/spinner.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -20,7 +21,7 @@ export class UsuarioComponent implements OnInit {
 
   user: Usuario = {name: '', lastName: '', user: '', password: '', email: '', legajo: '', fechaNac: '', color: '', habilitado: true, diasFavor: 0, diasVacaciones: 0, horasFavor: 0};
 
-  constructor(private usuarioService: UsuarioService, private spinnerService: SpinnerService, private formBuilder: FormBuilder) {
+  constructor(private usuarioService: UsuarioService, private spinnerService: SpinnerService, private formBuilder: FormBuilder, private confirmationService: ConfirmationService) {
     this.formGroup = this.formBuilder.group({
       name : ['',[Validators.required]],
       lastName : ['',[]],
@@ -44,7 +45,7 @@ export class UsuarioComponent implements OnInit {
       this.usuarios = data;
       console.log(data);
     });
-    this.spinnerService.hide();
+    //this.spinnerService.hide();
   }
 
   insertUsuario(usuario: Usuario){
@@ -61,7 +62,10 @@ export class UsuarioComponent implements OnInit {
   }
 
   deleteUsuario(usuario: Usuario){
-    console.log(usuario);
+    console.log(usuario);    
+      this.usuarioService.deleteUsuario(usuario).subscribe((element)=>(
+        this.ngOnInit()
+      ));    
   }
 
   toggleEnabled(usuario){    
@@ -111,7 +115,7 @@ export class UsuarioComponent implements OnInit {
       email : this.formGroup.value.email,
       legajo : this.formGroup.value.legajo,
       habilitado : this.user.habilitado,
-      color : this.formGroup.value.color,
+      color : this.user.color,
       diasFavor : this.formGroup.value.diasFavor,
       diasVacaciones : this.formGroup.value.diasVacaciones,
       horasFavor: this.user.horasFavor
@@ -120,6 +124,21 @@ export class UsuarioComponent implements OnInit {
     this.user=usuario;
     this.newUser ? this.insertUsuario(usuario): this.updateUsuario(usuario);
     //this.ngOnInit();    
+  }
+
+
+  confirm(usuario: Usuario) {
+    this.confirmationService.confirm({
+      message: '¿Está seguro/a de eliminar a este usuario?',
+      key: 'confirm',
+      header: 'Eliminación de usuariuo',
+      rejectLabel: 'Cancelar',
+      acceptLabel: 'Confirmar',
+      reject:()=>{console.log("Rejected")},
+      accept:()=>{
+        this.deleteUsuario(usuario);
+      }
+    });
   }
 
 }

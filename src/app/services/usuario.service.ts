@@ -10,6 +10,20 @@ const httpOptions = {
   })
 }
 
+const httpOptionsFTP = {
+  headers: new HttpHeaders({
+    'Content-Type':'application/json'
+  })
+}
+
+httpOptionsFTP.headers.append('Access-Control-Allow-Origin', '*');
+httpOptionsFTP.headers.append('Access-Control-Allow-Origin', '*');
+httpOptionsFTP.headers.append("Access-Control-Allow-Headers", "X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+httpOptionsFTP.headers.append("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+httpOptionsFTP.headers.append("Allow", "GET, POST, OPTIONS, PUT, DELETE");
+
+httpOptions.headers.append('Access-Control-Allow-Origin', '*');
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,6 +34,7 @@ export class UsuarioService {
   private api = 'https://administracion-upa-10.herokuapp.com/usuario'
   private apiFile = 'https://administracion-upa-10.herokuapp.com/fileUsuario/'
   private apiFileData = 'https://administracion-upa-10.herokuapp.com/fileUser/'
+  private apiFTP = 'http://localhost:8080/ftp-download'
 
   //private api = 'http://localhost:8080/usuario'
   //private apiFile = 'http://localhost:8080/fileUsuario/'
@@ -53,6 +68,10 @@ export class UsuarioService {
          this._refresh$.next();       
       })
     );
+  }
+
+  getFTP(): Observable<Blob>{
+    return this.http.get<Blob>(this.apiFTP, { headers: httpOptionsFTP.headers, responseType: "blob" as 'json'});
   }
 
   getImage(idUsuario: number): Observable<any>{

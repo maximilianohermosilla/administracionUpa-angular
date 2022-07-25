@@ -14,8 +14,13 @@ export class PerfilComponent implements OnInit {
   formGroup: FormGroup;
   user: Usuario = {id: 0, name: '', lastName: '', user: '', password: '', email: '', legajo: '', fechaNac: '', color: '', habilitado: true, diasFavor: 0, diasVacaciones: 0, horasFavor: 0};
   photo: string;
+  _photoFTP: string;
+  photoFTP: string;
+  photoBlob: Blob;
   imageUrl: string;
+  imageUrlFTP: string;
   isAdmin=false;
+  imageToShow;
 
   constructor(private usuarioService: UsuarioService, private spinnerService: SpinnerService, private formBuilder: FormBuilder, private domSanitizer: DomSanitizer) {
     this.formGroup = this.formBuilder.group({
@@ -32,18 +37,21 @@ export class PerfilComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.spinnerService.show();   
+    this.spinnerService.show(); 
+    this.photoFTP="ftp://u373460528:App_4320*3@amh-web.com/domains/amh-web.com/administracionUpa/profile/unidosxlaunaj.jpg";  
     this.usuarioService.findUsuario(1).subscribe(data =>{
       this.user = data;
       this.setPerfil();
     });
     this.usuarioService.getProfilePhoto(1).subscribe(data =>{     
-      this.photo = data;      
+      this.photo = data;   
+      console.log(data);   
     });
-    console.log(this.photo);
-    this.imageUrl= this.domSanitizer.bypassSecurityTrustResourceUrl(this.photo) as string;
-    console.log(this.imageUrl);
-    this.transform(this.imageUrl);
+    this.usuarioService.getFTP().subscribe(data =>{
+      //this.photoBlob = data;
+      this.createImageFromBlob(data);
+      //let objectURL = URL.createObjectURL(this.photoBlob);  
+    })
     this.youAreAdmin();
     this.spinnerService.hide();    
   }
@@ -75,6 +83,17 @@ export class PerfilComponent implements OnInit {
 
   onSubmit(user: Usuario){
 
+  }
+
+  createImageFromBlob(image: Blob) {
+    let reader = new FileReader();
+    reader.addEventListener("load", () => {
+      this.imageToShow = reader.result;       
+      this.imageUrlFTP = this.domSanitizer.bypassSecurityTrustUrl(this.imageToShow) as string;
+    }, false); 
+    if (image) {
+       reader.readAsDataURL(image);
+    }    
   }
 
 }

@@ -31,6 +31,7 @@ import { InasistenciasComponent } from './components/inasistencias/inasistencias
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     ConfirmDialogModule,
     BrowserAnimationsModule,
+    ColorPickerModule,
     NgbModule
   ],
   providers: [EventoService, ExcelService, ConfirmationService ,

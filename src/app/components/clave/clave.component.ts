@@ -11,23 +11,45 @@ import { EmailService } from 'src/app/services/email.service';
 export class ClaveComponent implements OnInit {
 
   checkEmail: boolean=false;
+  emailMessage;
   constructor(private emailService: EmailService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
+
   }
 
   sendMail(){    
       this.emailService.sendWelcome().subscribe((element)=>(
-        //console.log(element),
-        this.ngOnInit()
+        console.log(element),
+        (element != '')? this.emailMessage='Solicitud procesada con éxito': "Ocurrió un error",
+        this.sendDialog()   
       ));   
-      this.checkEmail = true; 
-      this.confirm();
+      this.checkEmail = true;       
+  }
+
+  sendDialog() {
+    this.confirmationService.confirm({
+      message: this.emailMessage,
+      key: 'sendMail',
+      header: 'Administración UPA 10',
+      acceptLabel: 'Cerrar'
+    });
   }
 
   confirm() {
     this.confirmationService.confirm({
+      message: 'Elija una de las tres opciones',
+      key: 'fullDialog',
+      header: 'Administración UPA 10',
+      accept:()=>{console.log("Accepted")},
+      reject:()=>{console.log("Rejected")}
+    });
+  }
+
+  confirmSure() {
+    this.confirmationService.confirm({
       message: '¿ Estás seguro ?',
+      key: 'areYouSure',
       header: 'Administración UPA 10',
       accept:()=>{console.log("Accepted")},
       reject:()=>{console.log("Rejected")}
@@ -37,11 +59,13 @@ export class ClaveComponent implements OnInit {
   updateValueIndex() {
     alert('Add Code to Update');
   }
+
   CancelToAdd() {
-  alert('Cancel Adding Duplicate Value');
+    alert('Cancel Adding Duplicate Value');
   }
+
   AddDuplicate() {
-  alert('Add code for adding duplicate value');
+    alert('Add code for adding duplicate value');
   }
 
 }

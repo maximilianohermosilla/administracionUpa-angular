@@ -29,12 +29,17 @@ th{
     color: #FFFFFF;
     padding-left: 50px;
     padding-right: 50px;
-  }
+}
 
-  .title {
-      height: 48px;
-  }
+.title {
+    height: 48px;
+}
 
-  .container{
-    width: 100%;
-  }
+.container{
+width: 100%;
+}
+
+.table-responsive {
+min-height: .01%;
+overflow-x: auto;
+}
